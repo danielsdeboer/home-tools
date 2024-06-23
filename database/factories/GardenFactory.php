@@ -2,22 +2,19 @@
 
 namespace Database\Factories;
 
+use App\Models\Garden;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Garden>
+ * @extends Factory<Garden>
  */
 class GardenFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'name' => $this->faker->sentence(rand(1, 4)),
+			'location' => $this->faker->sentence(rand(1, 4)),
         ];
     }
 }

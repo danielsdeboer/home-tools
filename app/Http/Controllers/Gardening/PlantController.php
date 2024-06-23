@@ -10,6 +10,7 @@ use App\Http\Packets\Page\BreadcrumbsPacket;
 use App\Http\Packets\Page\CrumbPacket;
 use App\Http\Packets\Page\HeaderPacket;
 use App\Http\Packets\Page\PagePacket;
+use App\Http\Packets\PaginationPacket;
 use App\Http\Packets\Plants\PlantPacket;
 use App\Http\Packets\Plants\PlantPlotsPacket;
 use App\Models\Plant;
@@ -38,7 +39,10 @@ class PlantController
 				breadcrumbs: $this->breadcrumbs,
 				header: new HeaderPacket('Plants', ResourceIcon::Plant),
 			),
-			'plants' => Plant::paginate(perPage: 24),
+			'plants' => new PaginationPacket(
+				Plant::orderBy('name')->paginate(perPage: 24),
+				PlantPacket::class,
+			)
 		]);
     }
 

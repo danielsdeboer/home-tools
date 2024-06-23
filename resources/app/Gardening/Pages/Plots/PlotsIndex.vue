@@ -8,7 +8,7 @@
 		PlotPlantName,
 		PlotShow,
 	} from '../../Types/Plots'
-	import { Link } from '@inertiajs/vue3'
+	import { Link, router } from '@inertiajs/vue3'
 	import { parseAndFormatDate } from '../../../Common/Dates/parseAndFormatDate'
 	import { ObservationsCount } from '../../Types/Observations'
 	import { Page } from '../../../Common/Types/Page'
@@ -51,6 +51,14 @@
 		},
 		{ title: 'Observations', key: 'observations_count' },
 	]
+
+	const changePage = (page: number) => {
+		if (page === props.plots.page_current) {
+			return
+		}
+
+		router.reload({ data: { page } })
+	}
 </script>
 
 <template>
@@ -59,7 +67,17 @@
 		:header="page.header"
 		:breadcrumbs="page.breadcrumbs"
 	>
-		<v-data-table :headers="headers" :items="plots.data" class="mt-8">
+		<v-data-table-server
+			:items-per-page="plots.page_size"
+			:items-per-page-options="[plots.page_size]"
+			:items-length="plots.items_total"
+			:page="plots.page_current"
+			:headers="headers"
+			:items="plots.data"
+			disable-sort
+			@update:page="changePage"
+			class="mt-8"
+		>
 			<template #item.name="{ item }">
 				<Link :href="route('gardening.plots.show', item)">
 					{{ item.name }}
@@ -77,6 +95,6 @@
 					{{ item.garden.name }}
 				</Link>
 			</template>
-		</v-data-table>
+		</v-data-table-server>
 	</Layout>
 </template>

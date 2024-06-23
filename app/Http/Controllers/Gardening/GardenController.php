@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Gardening;
 
 use App\Enums\ResourceIcon;
 use App\Http\Packets\CollectionPacket;
+use App\Http\Packets\Gardens\GardenPacket;
 use App\Http\Packets\Gardens\GardenPlantPacket;
 use App\Http\Packets\Gardens\GardensShowPacket;
 use App\Http\Packets\Page\BreadcrumbsPacket;
 use App\Http\Packets\Page\CrumbPacket;
 use App\Http\Packets\Page\HeaderPacket;
 use App\Http\Packets\Page\PagePacket;
+use App\Http\Packets\PaginationPacket;
 use App\Models\Garden;
 use App\Models\Plant;
 use Illuminate\Http\RedirectResponse;
@@ -37,7 +39,10 @@ class GardenController
 				breadcrumbs: $this->breadcrumbs,
 				header: new HeaderPacket('Gardens', ResourceIcon::Garden),
 			),
-			'gardens' => Garden::paginate(perPage: 24),
+			'gardens' => new PaginationPacket(
+				Garden::orderBy('name')->paginate(perPage: 24),
+				GardenPacket::class,
+			),
 		]);
 	}
 
