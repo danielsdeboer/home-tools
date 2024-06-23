@@ -1,0 +1,9 @@
+.data-display-grid {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	grid-gap: 1rem;
+}
+
+.data-display-grid > div:nth-child(odd) {
+	text-align: right;
+}

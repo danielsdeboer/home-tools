@@ -1,0 +1,27 @@
+{
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "@vue/language-server": "^2.0.22",
+        "laravel-vite-plugin": "^1.0.0",
+        "prettier": "3.3.2",
+        "typescript": "^5.5.2",
+        "vite": "^5.0.0"
+    },
+    "dependencies": {
+        "@inertiajs/vue3": "^1.2.0",
+        "@mdi/js": "^7.4.47",
+        "@types/lodash": "^4.17.5",
+        "@vitejs/plugin-vue": "^5.0.5",
+        "date-fns": "^3.6.0",
+        "lodash": "^4.17.21",
+        "vite-plugin-vuetify": "^2.0.3",
+        "vue": "^3.4.29",
+        "vuetify": "^3.6.9",
+        "ziggy-js": "^2.2.1"
+    }
+}
