@@ -13,6 +13,7 @@ use App\Http\Packets\Page\CrumbPacket;
 use App\Http\Packets\Page\HeaderPacket;
 use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
+use App\Http\Packets\Plants\PlantPacket;
 use App\Http\Packets\Plants\PlantStubPacket;
 use App\Http\Packets\Plots\PlotObservationCountPacket;
 use App\Http\Packets\Plots\PlotPacket;
@@ -65,7 +66,7 @@ class PlotController
 	{
 		$plot->load([
 			'garden',
-			'plant',
+			'plants',
 			'observations' => fn (MorphMany $query) => $query->orderBy(
 				'observed_at',
 				'desc',
@@ -81,7 +82,10 @@ class PlotController
 			'plot' => new MergePacket(
 				new PlotPacket($plot),
 				new KeyPacket('garden', new GardenStubPacket($plot->garden)),
-				new KeyPacket('plant', new PlantStubPacket($plot->plant)),
+				new KeyPacket('plants', new CollectionPacket(
+					$plot->plants,
+					PlantPacket::class,
+				)),
 				new KeyPacket('observations', new ObservationsPacket($plot)),
 			),
 		]);

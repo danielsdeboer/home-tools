@@ -12,6 +12,7 @@ use App\Http\Packets\Page\HeaderPacket;
 use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
 use App\Http\Packets\Plants\PlantPacket;
+use App\Http\Packets\Plants\PlantPlotCountPacket;
 use App\Http\Packets\Plants\PlantPlotsPacket;
 use App\Models\Plant;
 use Illuminate\Http\RedirectResponse;
@@ -40,8 +41,14 @@ class PlantController
 				header: new HeaderPacket('Plants', ResourceIcon::Plant),
 			),
 			'plants' => new PaginationPacket(
-				Plant::orderBy('name')->paginate(perPage: 24),
-				PlantPacket::class,
+				Plant::withCount('plots')
+					->orderBy('name')
+					->paginate(perPage: 24),
+				fn (Plant $plant) => new ComboPacket(
+					$plant,
+					PlantPacket::class,
+					PlantPlotCountPacket::class,
+				),
 			)
 		]);
     }

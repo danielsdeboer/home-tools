@@ -107,5 +107,10 @@
 				<slot />
 			</v-container>
 		</v-main>
+
+		<v-footer class="d-flex flex-column py-12 mt-8">
+			<p class="font-weight-bold text-lg-h5">Tools for your home</p>
+			<p>Use at your own risk.</p>
+		</v-footer>
 	</v-app>
 </template>

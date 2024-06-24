@@ -63,14 +63,10 @@
 			<v-alert>
 				<v-row>
 					<v-col>
-						<ObservationForm :errors="errors" :persist="storeCb" />
-					</v-col>
-
-					<v-col cols="auto">
-						<v-btn
-							:icon="mdiClose"
-							size="x-small"
-							@click="emit('cancelCreate')"
+						<ObservationForm
+							:errors="errors"
+							:persist="storeCb"
+							@cancel="emit('cancelCreate')"
 						/>
 					</v-col>
 				</v-row>

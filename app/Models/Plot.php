@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
  *
@@ -64,8 +65,8 @@ class Plot extends Model implements HasObservationsInterface
 		return $this->belongsTo(Garden::class);
 	}
 
-	public function plant(): BelongsTo
+	public function plants(): BelongsToMany
 	{
-		return $this->belongsTo(Plant::class);
+		return $this->belongsToMany(Plant::class);
 	}
 }

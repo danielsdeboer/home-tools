@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import Layout from '../../../Common/Components/Layout.vue'
-	import { mdiBinoculars } from '@mdi/js'
+	import { mdiBinoculars, mdiSprout } from '@mdi/js'
 	import { InertiaForm } from '@inertiajs/vue3'
 	import { computed, PropType, ref } from 'vue'
 	import { Plot, PlotShow } from '../../Types/Plots'
@@ -32,6 +32,11 @@
 		() =>
 			`${props.plot.name} - ${props.plot.plant.name} in ${props.plot.garden.name}`,
 	)
+
+	const plantTableHeaders = [
+		{ title: 'Plant Name', key: 'name' },
+		{ title: 'Variety', key: 'variety' },
+	]
 
 	// Observations //
 
@@ -85,14 +90,6 @@
 						<DataList>
 							<div><strong>Plot Name:</strong></div>
 							<div>{{ plot.name }}</div>
-
-							<div><strong>Plant Name:</strong></div>
-							<div>
-								<Link
-									:href="route('gardening.plants.show', plot.plant)"
-									v-text="plot.plant.name"
-								/>
-							</div>
 
 							<div><strong>Garden Name:</strong></div>
 							<div>
@@ -159,8 +156,31 @@
 						v-else
 						:icon="mdiBinoculars"
 						title="No Observations Yet"
+						size="40px"
 					/>
 				</Section>
+			</Section>
+
+			<Section>
+				<SectionHeader
+					:icon="mdiSprout"
+					:has-create="false"
+					text="Plants in this plot"
+				/>
+
+				<v-data-table
+					class="mt-4"
+					:headers="plantTableHeaders"
+					:items="plot.plants"
+					:items-per-page="-1"
+					hide-default-footer
+				>
+					<template #item.name="{ item }">
+						<Link :href="route('gardening.plants.show', item)">
+							{{ item.name }}
+						</Link>
+					</template>
+				</v-data-table>
 			</Section>
 		</SectionList>
 	</Layout>

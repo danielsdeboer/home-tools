@@ -123,6 +123,7 @@
 					v-else
 					:icon="mdiBinoculars"
 					title="No Observations Yet"
+					size="40px"
 				/>
 			</Section>
 
@@ -145,6 +146,7 @@
 					v-if="!isCreatingLink && plant.links.length === 0"
 					:icon="mdiLink"
 					title="No Links Yet"
+					size="40px"
 				/>
 
 				<div v-if="!isCreatingLink && plant.links.length" class="mt-4">
@@ -191,6 +193,8 @@
 					class="mt-4"
 					:headers="plotTableHeaders"
 					:items="plant.plots"
+					:items-per-page="-1"
+					hide-default-footer
 				>
 					<template #item.name="{ item }">
 						<Link :href="route('gardening.plots.show', item)">

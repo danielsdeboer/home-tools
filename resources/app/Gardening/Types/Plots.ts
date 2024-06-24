@@ -20,7 +20,7 @@ export interface PlotPlantName {
 }
 
 export interface PlotShow extends Plot {
-	plant: Plant
+	plants: Plant[]
 	garden: GardenShow
 	observations: Observation[]
 }

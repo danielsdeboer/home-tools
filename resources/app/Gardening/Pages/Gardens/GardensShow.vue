@@ -143,6 +143,7 @@
 					v-else
 					:icon="mdiBinoculars"
 					title="No Observations Yet"
+					size="40px"
 				/>
 			</Section>
 

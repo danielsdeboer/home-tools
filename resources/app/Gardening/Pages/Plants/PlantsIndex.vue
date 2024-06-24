@@ -3,13 +3,13 @@
 	import { PropType } from 'vue'
 	import { Pagination } from '../../../Common/Types/Pagination'
 	import { Link, router } from '@inertiajs/vue3'
-	import { Plant } from '../../Types/Plants'
+	import { Plant, PlantPlotsCount } from '../../Types/Plants'
 	import { Page } from '../../../Common/Types/Page'
 	import { route } from 'ziggy-js'
 
 	const props = defineProps({
 		plants: {
-			type: Object as PropType<Pagination<Plant>>,
+			type: Object as PropType<Pagination<Plant & PlantPlotsCount>>,
 			required: true,
 		},
 		page: {
@@ -22,6 +22,7 @@
 		{ title: 'Name', key: 'name' },
 		{ title: 'Variety', key: 'variety' },
 		{ title: 'Botanical', key: 'botanical' },
+		{ title: 'In Plots', key: 'plots_count' },
 	]
 
 	const changePage = (page: number) => {
