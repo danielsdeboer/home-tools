@@ -6,7 +6,7 @@
 	import { required } from '../../Common/Validation/required'
 	import { mdiCalendar } from '@mdi/js'
 	import FormErrors from '../../Common/Components/Form/FormErrors.vue'
-	import { isEmpty } from 'lodash'
+	import { isEmpty } from 'lodash/isEmpty'
 	import { Plot } from '../Types/Plots'
 
 	const props = defineProps({

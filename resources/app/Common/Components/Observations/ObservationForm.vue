@@ -6,6 +6,8 @@
 	import { mdiCalendar } from '@mdi/js'
 	import FormErrors from '../Form/FormErrors.vue'
 
+	const emit = defineEmits<{ (e: 'cancel'): void }>()
+
 	const props = defineProps({
 		observation: {
 			type: Object as PropType<Observation>,
@@ -36,32 +38,6 @@
 	const callPersist = () => {
 		props.persist(form, props.observation)
 	}
-
-	// const persist = () => {
-	// 	const onSuccess = () => {
-	// 		emit('persisted')
-	// 	}
-	//
-	// 	if (props.observation && props.plot) {
-	// 		form.patch(
-	// 			route('gardening.plots.observations.update', {
-	// 				plot: props.plot.uuid,
-	// 				observation: props.observation.uuid,
-	// 			}),
-	// 			{ onSuccess },
-	// 		)
-	//
-	// 		return
-	// 	}
-	//
-	// 	form.post(
-	// 		route('gardening.plots.observations.store', {
-	// 			plot: props.plot.uuid,
-	// 			observation: props.observation.uuid,
-	// 		}),
-	// 		{ onSuccess },
-	// 	)
-	// }
 </script>
 
 <template>
@@ -101,11 +77,20 @@
 		</v-radio-group>
 
 		<v-btn
+			block
+			@click="emit('cancel')"
+			text="Cancel"
+			class="mb-3"
+			color="error"
+		/>
+
+		<v-btn
 			type="submit"
 			block
 			:loading="form.processing"
 			:disabled="!formIsValid || form.processing"
 			text="Save"
+			color="primary"
 		/>
 	</v-form>
 </template>

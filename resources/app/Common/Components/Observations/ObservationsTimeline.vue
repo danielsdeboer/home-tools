@@ -7,12 +7,15 @@
 	import { InertiaForm } from '@inertiajs/vue3'
 	import { Observation } from '../../../Gardening/Types/Observations'
 	import WhitespaceText from '../Form/Content/WhitespaceText.vue'
+	import { useDisplay } from 'vuetify'
 
 	const emit = defineEmits<{
 		(e: 'cancelCreate'): void
 		(e: 'cancelEdit'): void
 		(e: 'initEdit', uuid: string): void
 	}>()
+
+	const { mobile } = useDisplay()
 
 	const props = defineProps({
 		errors: {
@@ -50,6 +53,7 @@
 		side="end"
 		truncate-line="both"
 		justify="auto"
+		:hide-opposite="mobile"
 		style="grid-template-columns: max-content min-content auto"
 		size="small"
 	>
@@ -78,6 +82,7 @@
 			:key="observation.uuid"
 			:dot-color="observation.status"
 			width="100%"
+			:size="mobile ? 'x-small' : 'small'"
 			fill-dot
 		>
 			<template v-slot:opposite>
@@ -97,23 +102,37 @@
 							:observation="observation"
 							:errors="errors"
 							:persist="updateCb"
+							@cancel="emit('cancelEdit')"
 						/>
 					</v-col>
 
 					<v-col v-else>
+						<div
+							v-if="mobile"
+							class="d-flex align-baseline justify-space-between mb-2"
+						>
+							<div class="d-flex align-baseline ga-2">
+								<p v-text="parseAndFormatDate(observation.observed_at)" />
+								<p
+									class="text-caption"
+									v-text="parseAndFormatHumanDate(observation.observed_at)"
+								/>
+							</div>
+
+							<v-btn
+								:icon="mdiPencil"
+								size="x-small"
+								@click="emit('initEdit', observation.uuid)"
+								:disabled="!!editingUuid"
+							/>
+						</div>
+
 						<WhitespaceText :text="observation.content" />
 					</v-col>
 
-					<v-col cols="auto">
+					<v-col cols="auto" v-if="!mobile">
 						<v-btn
-							v-if="isEditing(observation)"
-							:icon="mdiClose"
-							size="x-small"
-							@click="emit('cancelEdit')"
-						/>
-
-						<v-btn
-							v-else
+							v-if="!isEditing(observation)"
 							:icon="mdiPencil"
 							size="x-small"
 							@click="emit('initEdit', observation.uuid)"
