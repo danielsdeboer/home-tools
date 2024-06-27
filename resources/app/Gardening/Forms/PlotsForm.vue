@@ -1,12 +1,12 @@
 <script setup lang="ts">
 	import { PropType, ref } from 'vue'
 	import { GardenShow, GardenStub } from '../Types/Gardens'
-	import { Plant, PlantStub } from '../Types/Plants'
+	import { PlantStub } from '../Types/Plants'
 	import { InertiaForm, useForm } from '@inertiajs/vue3'
 	import { required } from '../../Common/Validation/required'
 	import { mdiCalendar } from '@mdi/js'
 	import FormErrors from '../../Common/Components/Form/FormErrors.vue'
-	import { isEmpty } from 'lodash/isEmpty'
+	import isEmpty from 'lodash/isEmpty'
 	import { Plot } from '../Types/Plots'
 
 	const props = defineProps({
@@ -26,10 +26,6 @@
 			type: Array as PropType<GardenStub[]>,
 			default: () => [],
 		},
-		plants: {
-			type: Array as PropType<Plant[]>,
-			default: () => [],
-		},
 		persist: {
 			type: Function as PropType<(form: InertiaForm) => void>,
 			required: true,
@@ -37,7 +33,6 @@
 	})
 
 	const form = useForm({
-		plant_uuid: props.plot?.plant.uuid ?? null,
 		garden_uuid: props.plot?.garden.uuid ?? props.garden?.uuid ?? null,
 		name: props.plot?.name ?? null,
 		description: props.plot?.description ?? null,
@@ -62,18 +57,7 @@
 		</v-row>
 
 		<v-row>
-			<v-col cols="12" :md="garden ? 6 : 4">
-				<v-select
-					v-model="form.plant_uuid"
-					label="Plant"
-					:items="plants"
-					item-title="name"
-					item-value="uuid"
-					:rules="[required]"
-				/>
-			</v-col>
-
-			<v-col v-if="!garden" cols="12" :md="garden ? 6 : 4">
+			<v-col v-if="!garden" cols="12" :md="garden ? 12 : 6">
 				<v-select
 					v-model="form.garden_uuid"
 					label="Garden"
@@ -84,7 +68,7 @@
 				/>
 			</v-col>
 
-			<v-col :md="garden ? 6 : 4">
+			<v-col :md="garden ? 12 : 6">
 				<v-text-field v-model="form.name" label="Name" :rules="[required]" />
 			</v-col>
 		</v-row>

@@ -10,7 +10,7 @@ class MergePacket implements JsonSerializable
 	/** @var JsonSerializable|JsonSerializable[] */
 	private array $packets;
 
-	public function __construct(JsonSerializable ...$packets)
+	public function __construct(JsonSerializable|array ...$packets)
 	{
 		$this->packets = $packets;
 	}
@@ -20,6 +20,12 @@ class MergePacket implements JsonSerializable
 		$data = [];
 
 		foreach ($this->packets as $packet) {
+			if (is_array($packet)) {
+				$data = [...$data, ...$packet];
+
+				continue;
+			}
+
 			if ($packet instanceof KeyablePacketInterface) {
 				$packet->setKeyed(true);
 			}

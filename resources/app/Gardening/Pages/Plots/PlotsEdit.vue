@@ -25,10 +25,6 @@
 			type: Array as PropType<GardenStub[]>,
 			required: true,
 		},
-		plants: {
-			type: Array as PropType<PlantStub[]>,
-			required: true,
-		},
 	})
 
 	const update = (form: InertiaForm) => {
@@ -40,7 +36,6 @@
 	<Layout :header="page.header" :breadcrumbs="page.breadcrumbs">
 		<PlotsForm
 			:errors="errors"
-			:plants="plants"
 			:gardens="gardens"
 			:plot="plot"
 			:persist="update"

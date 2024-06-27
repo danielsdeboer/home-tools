@@ -5,19 +5,17 @@
 	import {
 		Plot,
 		PlotGardenName,
+		PlotIndex,
 		PlotPlantName,
 		PlotShow,
 	} from '../../Types/Plots'
 	import { Link, router } from '@inertiajs/vue3'
 	import { parseAndFormatDate } from '../../../Common/Dates/parseAndFormatDate'
-	import { ObservationsCount } from '../../Types/Observations'
 	import { Page } from '../../../Common/Types/Page'
 
 	const props = defineProps({
 		plots: {
-			type: Object as PropType<
-				Pagination<Plot & ObservationsCount & PlotGardenName & PlotPlantName>
-			>,
+			type: Object as PropType<Pagination<PlotIndex>>,
 			required: true,
 		},
 		page: {
@@ -28,17 +26,16 @@
 
 	const headers = [
 		{ title: 'Name', key: 'name' },
-		{ title: 'Plant', key: 'plant.name' },
-		{ title: 'Garden', key: 'garden.name' },
+		{ title: 'Garden Name', key: 'garden.name' },
 		{
 			title: 'Planted On',
 			key: 'planted_at',
-			value: (item: PlotShow) => parseAndFormatDate(item.planted_at),
+			value: (item: PlotIndex) => parseAndFormatDate(item.planted_at),
 		},
 		{
 			title: 'Germinated On',
 			key: 'germinated_at',
-			value: (item: PlotShow) =>
+			value: (item: PlotIndex) =>
 				item.germinated_at
 					? parseAndFormatDate(item.germinated_at)
 					: '(Not Set)',
@@ -46,10 +43,11 @@
 		{
 			title: 'Harvested On',
 			key: 'harvested_at',
-			value: (item: PlotShow) =>
+			value: (item: PlotIndex) =>
 				item.harvested_at ? parseAndFormatDate(item.harvested_at) : '(Not Set)',
 		},
 		{ title: 'Observations', key: 'observations_count' },
+		{ title: 'Plants', key: 'plants_count' },
 	]
 
 	const changePage = (page: number) => {
@@ -81,12 +79,6 @@
 			<template #item.name="{ item }">
 				<Link :href="route('gardening.plots.show', item)">
 					{{ item.name }}
-				</Link>
-			</template>
-
-			<template #item.plant.name="{ item }">
-				<Link :href="route('gardening.plants.show', item.plant)">
-					{{ item.plant.name }}
 				</Link>
 			</template>
 

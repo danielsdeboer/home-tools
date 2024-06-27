@@ -1,6 +1,6 @@
-import { Plant } from './Plants'
-import { GardenShow } from './Gardens'
-import { Observation } from './Observations'
+import { Plant, PlantsCount } from './Plants'
+import { GardenShow, GardenStub } from './Gardens'
+import { Observation, ObservationsCount } from './Observations'
 
 export interface Plot {
 	uuid: string
@@ -23,4 +23,8 @@ export interface PlotShow extends Plot {
 	plants: Plant[]
 	garden: GardenShow
 	observations: Observation[]
+}
+
+export interface PlotIndex extends Plot, PlantsCount, ObservationsCount {
+	garden: GardenStub
 }

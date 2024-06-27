@@ -13,13 +13,15 @@
 	import { parseAndFormatDate } from '../../../Common/Dates/parseAndFormatDate'
 	import ObservationsTimeline from '../../../Common/Components/Observations/ObservationsTimeline.vue'
 	import { Observation } from '../../Types/Observations'
-	import { mdiLink } from '@mdi/js/commonjs/mdi'
+	import { mdiImage, mdiLink } from '@mdi/js/commonjs/mdi'
 	import LinksForm from '../../../Common/Components/Links/LinksForm.vue'
 	import WhitespaceText from '../../../Common/Components/Form/Content/WhitespaceText.vue'
+	import PhotosForm from '../../Forms/PhotosForm.vue'
+	import { Photos } from '../../Types/Photo'
 
 	const props = defineProps({
 		plant: {
-			type: Object as PropType<Plant & PlantPlot>,
+			type: Object as PropType<Plant & PlantPlot & Photos>,
 			required: true,
 		},
 		errors: {
@@ -80,6 +82,18 @@
 		form.post(route('gardening.plants.links.store', props.plant), {
 			onSuccess: () => {
 				isCreatingLink.value = false
+			},
+		})
+	}
+
+	// Photos //
+
+	const isCreatingPhoto = ref(false)
+
+	const storePhoto = (form: InertiaForm) => {
+		form.post(route('gardening.plants.photos.store', props.plant), {
+			onSuccess: () => {
+				isCreatingPhoto.value = false
 			},
 		})
 	}
@@ -180,6 +194,40 @@
 						</v-table>
 					</v-sheet>
 				</div>
+			</Section>
+
+			<Section>
+				<SectionHeader
+					:icon="mdiImage"
+					text="Photos"
+					:has-create="true"
+					:is-creating="isCreatingPhoto"
+					@toggle-create="isCreatingPhoto = !isCreatingPhoto"
+				/>
+
+				<PhotosForm
+					v-if="isCreatingPhoto"
+					:errors="errors"
+					:persist="storePhoto"
+					class="mt-4"
+					@cancel="isCreatingPhoto = false"
+				/>
+
+				<div class="photo-thumbnail-grid mt-4">
+					<v-img
+						v-for="photo in plant.photos"
+						:key="photo.uuid"
+						:src="photo.thumb || photo.src"
+						aspect-ratio="1"
+					/>
+				</div>
+
+				<v-empty-state
+					v-if="!isCreatingPhoto && !plant.photos?.length"
+					:icon="mdiImage"
+					title="No Photos Yet"
+					size="40px"
+				/>
 			</Section>
 
 			<Section>

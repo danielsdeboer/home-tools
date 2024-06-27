@@ -3,14 +3,17 @@
 namespace App\Http\Controllers\Gardening;
 
 use App\Enums\ResourceIcon;
+use App\Http\Packets\CollectionPacket;
 use App\Http\Packets\ComboPacket;
 use App\Http\Packets\Links\LinksPacket;
+use App\Http\Packets\MergePacket;
 use App\Http\Packets\Observations\ObservationsPacket;
 use App\Http\Packets\Page\BreadcrumbsPacket;
 use App\Http\Packets\Page\CrumbPacket;
 use App\Http\Packets\Page\HeaderPacket;
 use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
+use App\Http\Packets\Photos\PhotoPacket;
 use App\Http\Packets\Plants\PlantPacket;
 use App\Http\Packets\Plants\PlantPlotCountPacket;
 use App\Http\Packets\Plants\PlantPlotsPacket;
@@ -55,13 +58,19 @@ class PlantController
 
 	public function show(Plant $plant): Response
 	{
+		$plant->load('plots.garden', 'observations');
+
 		return Inertia::render('Gardening/Pages/Plants/PlantsShow', [
-			'plant' => new ComboPacket(
-				$plant->load('plots.garden', 'observations'),
-				PlantPacket::class,
-				PlantPlotsPacket::class,
-				ObservationsPacket::class,
-				LinksPacket::class,
+			'plant' => new MergePacket(
+				new PlantPacket($plant),
+				new PlantPlotsPacket($plant),
+				new ObservationsPacket($plant),
+				new LinksPacket($plant),
+				['photos' => new CollectionPacket(
+					$plant->getMedia('photos'),
+					PhotoPacket::class,
+				)]
+
 			),
 			'page' => new PagePacket(
 				editRoute: route('gardening.plants.edit', $plant),

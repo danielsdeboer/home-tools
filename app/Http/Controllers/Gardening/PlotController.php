@@ -40,8 +40,8 @@ class PlotController
 
 	public function index(): Response
 	{
-		$plots = Plot::with('garden', 'plant')
-			->withCount('observations')
+		$plots = Plot::with('garden')
+			->withCount('observations', 'plants')
 			->paginate(perPage: 24);
 
 		return Inertia::render('Gardening/Pages/Plots/PlotsIndex', [
@@ -55,8 +55,8 @@ class PlotController
 				fn (Plot $plot) => new MergePacket(
 					new PlotPacket($plot),
 					new KeyPacket('garden', new GardenStubPacket($plot->garden)),
-					new KeyPacket('plant', new PlantStubPacket($plot->plant)),
-					new PlotObservationCountPacket($plot),
+					['observations_count' => $plot->observations_count],
+					['plants_count' => $plot->plants_count],
 				),
 			),
 		]);
@@ -105,10 +105,6 @@ class PlotController
 				Garden::all(),
 				GardenStubPacket::class,
 			),
-			'plants' => new CollectionPacket(
-				Plant::all(),
-				PlantStubPacket::class,
-			),
 		]);
 	}
 
@@ -126,14 +122,9 @@ class PlotController
 				Garden::all(),
 				GardenStubPacket::class,
 			),
-			'plants' => new CollectionPacket(
-				Plant::all(),
-				PlantStubPacket::class,
-			),
 			'plot' => new MergePacket(
 				new PlotPacket($plot),
 				new KeyPacket('garden', new GardenStubPacket($plot->garden)),
-				new KeyPacket('plant', new PlantStubPacket($plot->plant)),
 			),
 		]);
 	}
@@ -142,7 +133,6 @@ class PlotController
 	{
 		$validated = $request->validate([
 			'garden_uuid' => ['required', 'exists:gardens,uuid'],
-			'plant_uuid' => ['required', 'exists:plants,uuid'],
 			'name' => ['required', 'string'],
 			'description' => ['present', 'nullable', 'string'],
 			'planted_at' => ['required', 'date'],
@@ -159,7 +149,6 @@ class PlotController
 	{
 		$validated = $request->validate([
 			'garden_uuid' => ['required', 'exists:gardens,uuid'],
-			'plant_uuid' => ['required', 'exists:plants,uuid'],
 			'name' => ['required', 'string'],
 			'description' => ['present', 'nullable', 'string'],
 			'planted_at' => ['required', 'date'],

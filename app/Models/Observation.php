@@ -12,13 +12,13 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * 
  *
  * @property string $uuid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $content
  * @property \Illuminate\Support\Carbon $observed_at
  * @property ObservationStatus $status
  * @property string $observable_uuid
  * @property string $observable_type
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property-read Model|\Eloquent $observable
  * @method static \Illuminate\Database\Eloquent\Builder|Observation newModelQuery()

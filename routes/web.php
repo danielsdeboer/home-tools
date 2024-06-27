@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Gardening\PlantPhotoController;
 use App\Http\Controllers\GardeningController;
 use App\Http\Controllers\Gardening\GardenController;
 use App\Http\Controllers\Gardening\GardenObservationController;
@@ -34,6 +35,9 @@ Route::prefix('gardening')->name('gardening.')->scopeBindings()->group(function 
 
 	Route::resource('plants.observations', PlantObservationController::class)
 		->only(['store', 'update']);
+
+	Route::resource('plants.photos', PlantPhotoController::class)
+		->only(['store']);
 
 	Route::resource('plants.links', PlantLinkController::class)
 		->only(['store', 'update']);

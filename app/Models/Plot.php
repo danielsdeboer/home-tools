@@ -11,11 +11,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- *
+ * 
  *
  * @property string $uuid
  * @property string $garden_uuid
- * @property string $plant_uuid
  * @property string $name
  * @property string|null $description
  * @property \Illuminate\Support\Carbon $planted_at
@@ -27,7 +26,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read \App\Models\Garden $garden
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Observation> $observations
  * @property-read int|null $observations_count
- * @property-read \App\Models\Plant $plant
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Plant> $plants
+ * @property-read int|null $plants_count
+ * @method static \Database\Factories\PlotFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Plot newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Plot newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Plot query()
@@ -38,7 +39,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Plot whereGerminatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Plot whereHarvestedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Plot whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Plot wherePlantUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Plot wherePlantedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Plot whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Plot whereUuid($value)

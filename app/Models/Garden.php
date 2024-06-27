@@ -12,11 +12,11 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
  * 
  *
  * @property string $uuid
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $name
  * @property string $location
  * @property string|null $description
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Observation> $observations
  * @property-read int|null $observations_count

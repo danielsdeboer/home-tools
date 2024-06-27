@@ -15,6 +15,10 @@ export interface PlantPlot extends PlantStub {
 	}
 }
 
+export interface PlantsCount {
+	plants_count: number
+}
+
 export interface PlantPlotsCount {
 	plots_count: number
 }

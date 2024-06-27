@@ -9,30 +9,28 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 /**
- *
+ * 
  *
  * @property string $uuid
+ * @property string $link
+ * @property string|null $description
+ * @property string $linkable_uuid
+ * @property string $linkable_type
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property string $content
- * @property \Illuminate\Support\Carbon $observed_at
- * @property ObservationStatus $status
- * @property string $observable_uuid
- * @property string $observable_type
  * @property string|null $deleted_at
- * @property-read Model|\Eloquent $observable
- * @method static \Illuminate\Database\Eloquent\Builder|Observation newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Observation newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Observation query()
- * @method static \Illuminate\Database\Eloquent\Builder|Observation whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Observation whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Observation whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Observation whereObservableType($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Observation whereObservableUuid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Observation whereObservedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Observation whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Observation whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Observation whereUuid($value)
+ * @property-read Model|\Eloquent $linkable
+ * @method static \Illuminate\Database\Eloquent\Builder|Link newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Link newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Link query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Link whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Link whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Link whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Link whereLink($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Link whereLinkableType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Link whereLinkableUuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Link whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Link whereUuid($value)
  * @mixin \Eloquent
  */
 class Link extends Model

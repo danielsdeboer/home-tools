@@ -92,7 +92,7 @@
 			</v-list>
 		</v-navigation-drawer>
 
-		<v-main>
+		<v-main style="min-height: 90vh">
 			<v-container>
 				<slot name="header">
 					<div v-if="header" class="d-flex align-center ga-4">
