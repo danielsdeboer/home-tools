@@ -6,6 +6,7 @@ use App\Models\Links\HasLinksInterface;
 use App\Models\Links\HasLinksTrait;
 use App\Models\Observations\HasObservationsInterface;
 use App\Models\Observations\HasObservationsTrait;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -56,6 +57,19 @@ class Plant extends Model implements HasObservationsInterface, HasLinksInterface
 	protected $primaryKey = 'uuid';
 
 	protected $guarded = [];
+
+	public function scopeSearch(Builder $builder, string|null $term): Builder
+	{
+		if ($term === null || $term === '') {
+			return $builder;
+		}
+
+		return $builder->where(fn (Builder $query) => $query
+			->where('name', 'like', "%$term%")
+			->orWhere('variety', 'like', "%$term%")
+			->orWhere('botanical', 'like', "%$term%")
+		);
+	}
 
 	public function registerMediaCollections(): void
 	{

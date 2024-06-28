@@ -35,7 +35,7 @@ class PlantController
 		);
 	}
 
-    public function index(): Response
+    public function index(Request $request): Response
     {
         return Inertia::render('Gardening/Pages/Plants/PlantsIndex', [
 			'page' => new PagePacket(
@@ -46,13 +46,14 @@ class PlantController
 			'plants' => new PaginationPacket(
 				Plant::withCount('plots')
 					->orderBy('name')
+					->search($request->input('search'))
 					->paginate(perPage: 24),
 				fn (Plant $plant) => new ComboPacket(
 					$plant,
 					PlantPacket::class,
 					PlantPlotCountPacket::class,
 				),
-			)
+			),
 		]);
     }
 
@@ -69,7 +70,7 @@ class PlantController
 				['photos' => new CollectionPacket(
 					$plant->getMedia('photos'),
 					PhotoPacket::class,
-				)]
+				)],
 
 			),
 			'page' => new PagePacket(

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import Layout from '../../../Common/Components/Layout.vue'
-	import { PropType } from 'vue'
+	import { PropType, ref } from 'vue'
 	import { Pagination } from '../../../Common/Types/Pagination'
 	import { Link, router } from '@inertiajs/vue3'
 	import { Plant, PlantPlotsCount } from '../../Types/Plants'
@@ -14,9 +14,15 @@
 		},
 		page: {
 			type: Object as PropType<Page>,
-			required: true,
+			default: 1,
+		},
+		search: {
+			type: String,
+			default: undefined,
 		},
 	})
+
+	const search = ref(props.search || '')
 
 	const headers = [
 		{ title: 'Name', key: 'name' },
@@ -30,7 +36,11 @@
 			return
 		}
 
-		router.reload({ data: { page } })
+		router.reload({ data: { page, search: search.value } })
+	}
+
+	const doSearch = () => {
+		router.reload({ data: { page: 1, search: search.value } })
 	}
 </script>
 
@@ -51,6 +61,20 @@
 			@update:page="changePage"
 			class="mt-8"
 		>
+			<template #top>
+				<div class="d-flex px-4 py-3 ga-4 align-end">
+					<v-text-field
+						density="compact"
+						v-model="search"
+						placeholder="Search name or variety..."
+						hide-details
+						@keyup.enter="doSearch"
+					/>
+
+					<v-btn @click="doSearch" color="primary">Search</v-btn>
+				</div>
+			</template>
+
 			<template #item.name="{ item }">
 				<Link :href="route('gardening.plants.show', item)" v-text="item.name" />
 			</template>

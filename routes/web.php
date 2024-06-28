@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get(RouteServiceProvider::HOME, [HomeController::class, 'index'])
 	->name('home.index');
 
-Route::prefix('gardening')->name('gardening.')->scopeBindings()->group(function () {
+Route::prefix('gardening')->name('gardening.')->group(function () {
 	Route::get('/', [GardeningController::class, 'index'])
 		->name('index');
 
@@ -37,11 +37,11 @@ Route::prefix('gardening')->name('gardening.')->scopeBindings()->group(function 
 		->only(['store', 'update']);
 
 	Route::resource('plants.photos', PlantPhotoController::class)
-		->only(['store']);
+		->only(['store', 'destroy']);
 
 	Route::resource('plants.links', PlantLinkController::class)
 		->only(['store', 'update']);
 
 	Route::resource('plots.observations', PlotObservationController::class)
 		->only(['store', 'update']);
-});
+})->scopeBindings();

@@ -10,6 +10,7 @@ use Spatie\Image\Image;
 use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileIsTooBig;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class PlantPhotoController
 {
@@ -28,6 +29,12 @@ class PlantPhotoController
 			->save();
 
 		$plant->addMedia($request->file('photo'))->toMediaCollection('photos');
+
+		return redirect()->back();
+	}
+
+	public function destroy(Plant $plant, Media $photo): RedirectResponse {
+		$photo->delete();
 
 		return redirect()->back();
 	}
