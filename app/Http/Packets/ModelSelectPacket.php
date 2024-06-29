@@ -2,31 +2,61 @@
 
 namespace App\Http\Packets;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use JsonSerializable;
 
 /** @template T of Model */
-class ModelSelectPacket implements \JsonSerializable
+class ModelSelectPacket implements JsonSerializable
 {
+	/** @param string|list<string> $titleColumns */
 	public function __construct(
 		protected readonly Model $model,
-		protected readonly string $titleColumn = 'name',
+		protected readonly array $titleColumns = ['name'],
 		protected readonly string $valueColumn = 'uuid',
-	)
-	{
+	) {
 	}
 
 	public function jsonSerialize(): array
 	{
-		$models = $this->model->newQuery()->select([
-			$this->valueColumn,
-			$this->titleColumn,
-		])->get();
+		return $this->getCollection()
+			->map($this->mapper(...))
+			->values()
+			->toArray();
+	}
 
-		$mapper = fn (Model $model): array => [
+	protected function mapper(Model $model): array
+	{
+		return [
 			'value' => $model->{$this->valueColumn},
-			'title' => $model->{$this->titleColumn},
+			'title' => $this->getTitle($model),
 		];
+	}
 
-		return $models->map($mapper)->values()->toArray();
+	protected function getTitle(Model $model): string
+	{
+		return implode(
+			' - ',
+			array_map(
+				fn (string $column) => $model->{$column},
+				$this->titleColumns,
+			),
+		);
+	}
+
+	protected function getCollection(): Collection
+	{
+		$query = $this->model->newQuery()->select($this->getSelects());
+
+		foreach ($this->titleColumns as $column) {
+			$query->orderBy($column);
+		}
+
+		return $query->get();
+	}
+
+	protected function getSelects(): array
+	{
+		return [$this->valueColumn, ...$this->titleColumns];
 	}
 }

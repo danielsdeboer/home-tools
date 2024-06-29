@@ -97,7 +97,7 @@ class PlotController
 				)),
 				new KeyPacket('observations', new ObservationsPacket($plot)),
 			),
-			'plants' => new ModelSelectPacket(new Plant()),
+			'plants' => new ModelSelectPacket(new Plant(), ['name', 'variety']),
 		]);
 	}
 
