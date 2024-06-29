@@ -18,6 +18,8 @@ use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
 use App\Http\Packets\Photos\PhotoPacket;
 use App\Models\Plant;
+use App\Models\Scopes\Gardening\Plants\PlantSearchScope;
+use App\Models\Scopes\WhenScope;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -37,6 +39,11 @@ class PlantController
 
     public function index(Request $request): Response
     {
+		$searchScope = new WhenScope(
+			$request->filled('search'),
+			fn () => new PlantSearchScope($request->input('search')),
+		);
+
         return Inertia::render('Gardening/Pages/Plants/PlantsIndex', [
 			'page' => new PagePacket(
 				createRoute: route('gardening.plants.create'),
@@ -46,7 +53,7 @@ class PlantController
 			'plants' => new PaginationPacket(
 				Plant::withCount('plots')
 					->orderBy('name')
-					->search($request->input('search'))
+					->scope($searchScope)
 					->paginate(perPage: 24),
 				fn (Plant $plant) => new ComboPacket(
 					$plant,

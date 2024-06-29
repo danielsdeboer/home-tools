@@ -6,6 +6,7 @@ use App\Models\Links\HasLinksInterface;
 use App\Models\Links\HasLinksTrait;
 use App\Models\Observations\HasObservationsInterface;
 use App\Models\Observations\HasObservationsTrait;
+use App\Models\Traits\ScopeTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -39,7 +40,7 @@ use Spatie\Image\Enums\Fit;
  * @method static Builder|Plant newModelQuery()
  * @method static Builder|Plant newQuery()
  * @method static Builder|Plant query()
- * @method static Builder|Plant search(?string $term)
+ * @method static Builder|Plant scope(\App\Models\Scopes\ScopeInterface ...$scopes)
  * @method static Builder|Plant whereBotanical($value)
  * @method static Builder|Plant whereCreatedAt($value)
  * @method static Builder|Plant whereDeletedAt($value)
@@ -56,23 +57,11 @@ class Plant extends Model implements HasObservationsInterface, HasLinksInterface
 	use HasObservationsTrait;
 	use HasLinksTrait;
 	use InteractsWithMedia;
+	use ScopeTrait;
 
 	protected $primaryKey = 'uuid';
 
 	protected $guarded = [];
-
-	public function scopeSearch(Builder $builder, string|null $term): Builder
-	{
-		if ($term === null || $term === '') {
-			return $builder;
-		}
-
-		return $builder->where(fn (Builder $query) => $query
-			->where('name', 'like', "%$term%")
-			->orWhere('variety', 'like', "%$term%")
-			->orWhere('botanical', 'like', "%$term%")
-		);
-	}
 
 	public function registerMediaCollections(): void
 	{

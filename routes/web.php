@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Gardening\ObservationController;
 use App\Http\Controllers\Gardening\PlantPhotoController;
+use App\Http\Controllers\Gardening\PlotPlantController;
 use App\Http\Controllers\GardeningController;
 use App\Http\Controllers\Gardening\GardenController;
 use App\Http\Controllers\Gardening\GardenObservationController;
@@ -29,6 +30,9 @@ Route::prefix('gardening')->name('gardening.')->group(function () {
 	]);
 
 	Route::resource('gardens.plots', GardenPlotController::class)
+		->only(['store']);
+
+	Route::resource('plots.plants', PlotPlantController::class)
 		->only(['store']);
 
 	Route::resource('gardens.observations', GardenObservationController::class)

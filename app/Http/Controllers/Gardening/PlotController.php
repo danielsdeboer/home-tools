@@ -9,6 +9,7 @@ use App\Http\Packets\Gardening\Plants\PlantPacket;
 use App\Http\Packets\Gardening\Plots\PlotPacket;
 use App\Http\Packets\KeyPacket;
 use App\Http\Packets\MergePacket;
+use App\Http\Packets\ModelSelectPacket;
 use App\Http\Packets\Observations\ObservationsPacket;
 use App\Http\Packets\Page\BreadcrumbsPacket;
 use App\Http\Packets\Page\CrumbPacket;
@@ -17,7 +18,10 @@ use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
 use App\Http\Packets\Plots\PlotObservationCountPacket;
 use App\Models\Garden;
+use App\Models\Plant;
 use App\Models\Plot;
+use App\Models\Scopes\Gardening\Plots\PlotSearchScope;
+use App\Models\Scopes\WhenScope;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -36,10 +40,17 @@ class PlotController
 		);
 	}
 
-	public function index(): Response
+	public function index(Request $request): Response
 	{
-		$plots = Plot::with('garden')
-			->withCount('observations', 'plants')
+		$searchScope = new WhenScope(
+			$request->filled('search'),
+			fn () => new PlotSearchScope($request->input('search')),
+		);
+
+		$plots = Plot::query()
+			->scope($searchScope)
+			->with('garden')
+			->withCount(['observations', 'plants'])
 			->paginate(perPage: 24);
 
 		return Inertia::render('Gardening/Pages/Plots/PlotsIndex', [
@@ -86,6 +97,7 @@ class PlotController
 				)),
 				new KeyPacket('observations', new ObservationsPacket($plot)),
 			),
+			'plants' => new ModelSelectPacket(new Plant()),
 		]);
 	}
 

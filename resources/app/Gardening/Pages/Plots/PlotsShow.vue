@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import Layout from '../../../Common/Components/Layout.vue'
 	import { mdiBinoculars, mdiSprout } from '@mdi/js'
-	import { InertiaForm } from '@inertiajs/vue3'
-	import { computed, PropType, ref } from 'vue'
+	import { InertiaForm, useForm } from '@inertiajs/vue3'
+	import { computed, Prop, PropType, ref } from 'vue'
 	import { Plot, PlotShow } from '../../Types/Plots'
 	import { Link } from '@inertiajs/vue3'
 	import { parseAndFormatDate } from '../../../Common/Dates/parseAndFormatDate'
@@ -12,6 +12,9 @@
 	import Section from '../../../Common/Components/Sections/Section.vue'
 	import ObservationsTimeline from '../../../Common/Components/Observations/ObservationsTimeline.vue'
 	import SectionHeader from '../../../Common/Components/Sections/SectionHeader.vue'
+	import FormErrors from '../../../Common/Components/Form/FormErrors.vue'
+	import { requiredField } from '../../../Common/Validation/required'
+	import { Select } from '../../../Common/Types/Select'
 
 	const props = defineProps({
 		errors: {
@@ -24,6 +27,10 @@
 		},
 		page: {
 			type: Object as PropType<Page>,
+			required: true,
+		},
+		plants: {
+			type: Array as Prop<Select>,
 			required: true,
 		},
 	})
@@ -63,6 +70,20 @@
 				},
 			},
 		)
+	}
+
+	// Plants //
+
+	const isAddingPlant = ref(false)
+	const plantForm = useForm({ plant_uuid: null })
+	const plantFormIsValid = ref(false)
+
+	const addPlant = () => {
+		plantForm.post(route('gardening.plots.plants.store', props.plot), {
+			onSuccess: () => {
+				isAddingPlant.value = false
+			},
+		})
 	}
 </script>
 
@@ -152,21 +173,54 @@
 						class="mt-4"
 					/>
 
-					<v-empty-state
-						v-else
-						:icon="mdiBinoculars"
-						title="No Observations Yet"
-						size="40px"
-					/>
+					<v-empty-state v-else title="No Observations Yet" size="40px" />
 				</Section>
 			</Section>
 
 			<Section>
 				<SectionHeader
 					:icon="mdiSprout"
-					:has-create="false"
 					text="Plants in this plot"
+					:has-create="true"
+					:is-creating="isAddingPlant"
+					@toggle-create="isAddingPlant = !isAddingPlant"
 				/>
+
+				<v-form
+					v-if="isAddingPlant"
+					@submit.prevent="addPlant"
+					v-model="plantFormIsValid"
+					style="width: 100%"
+				>
+					<FormErrors :errors="errors" class="mb-4" />
+
+					<v-select
+						v-model="plantForm.plant_uuid"
+						label="Plant"
+						:rules="[requiredField('plant')]"
+						:readonly="plantForm.processing"
+						:items="plants"
+						class="mt-4"
+					/>
+
+					<div class="d-flex ga-4 mt-2">
+						<v-btn
+							color="error"
+							:disabled="plantForm.processing"
+							text="Cancel"
+							@click="isAddingPlant = false"
+						/>
+
+						<v-btn
+							type="submit"
+							color="primary"
+							:loading="plantForm.processing"
+							:disabled="!plantFormIsValid || plantForm.processing"
+						>
+							Add Plant
+						</v-btn>
+					</div>
+				</v-form>
 
 				<v-data-table
 					class="mt-4"

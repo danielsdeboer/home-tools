@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import Layout from '../../../Common/Components/Layout.vue'
-	import { PropType, ref } from 'vue'
+	import { computed, PropType, ref } from 'vue'
 	import { Pagination } from '../../../Common/Types/Pagination'
 	import { Link, router } from '@inertiajs/vue3'
 	import { Plant, PlantPlotsCount } from '../../Types/Plants'
@@ -22,7 +22,10 @@
 		},
 	})
 
-	const search = ref(props.search || '')
+	const searchTerm = ref(props.search || '')
+	const hasSearchTerm = computed(
+		() => searchTerm.value !== undefined && searchTerm.value !== '',
+	)
 
 	const headers = [
 		{ title: 'Name', key: 'name' },
@@ -36,11 +39,16 @@
 			return
 		}
 
-		router.reload({ data: { page, search: search.value } })
+		router.reload({
+			data: {
+				page,
+				...(hasSearchTerm.value && { search: searchTerm.value }),
+			},
+		})
 	}
 
 	const doSearch = () => {
-		router.reload({ data: { page: 1, search: search.value } })
+		router.reload({ data: { page: 1, search: searchTerm.value } })
 	}
 </script>
 
@@ -65,7 +73,7 @@
 				<div class="d-flex px-4 py-3 ga-4 align-end">
 					<v-text-field
 						density="compact"
-						v-model="search"
+						v-model="searchTerm"
 						placeholder="Search name or variety..."
 						hide-details
 						@keyup.enter="doSearch"

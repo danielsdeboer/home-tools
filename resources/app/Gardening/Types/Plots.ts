@@ -9,6 +9,7 @@ export interface Plot {
 	planted_at: string
 	germinated_at: string | null
 	harvested_at: string | null
+	status: 'current' | 'done'
 }
 
 export interface PlotGardenName {

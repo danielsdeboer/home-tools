@@ -2,8 +2,11 @@
 
 namespace App\Models;
 
+use App\Models\Enums\PlotStatus;
 use App\Models\Observations\HasObservationsInterface;
 use App\Models\Observations\HasObservationsTrait;
+use App\Models\Traits\ScopeTrait;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,10 +31,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property-read int|null $observations_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Plant> $plants
  * @property-read int|null $plants_count
+ * @property-read mixed $status
  * @method static \Database\Factories\PlotFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Plot newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Plot newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Plot query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Plot scope(\App\Models\Scopes\ScopeInterface ...$scopes)
  * @method static \Illuminate\Database\Eloquent\Builder|Plot whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Plot whereDeletedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Plot whereDescription($value)
@@ -49,6 +54,7 @@ class Plot extends Model implements HasObservationsInterface
     use HasFactory;
 	use HasUuids;
 	use HasObservationsTrait;
+	use ScopeTrait;
 
 	protected $primaryKey = 'uuid';
 
@@ -59,6 +65,19 @@ class Plot extends Model implements HasObservationsInterface
 		'germinated_at' => 'datetime',
 		'harvested_at' => 'datetime',
 	];
+
+	// Accessors //
+
+	public function status(): Attribute
+	{
+		return new Attribute(
+			get: fn ($_, array $attrs) => $attrs['harvested_at'] === null
+				? PlotStatus::Current
+				: PlotStatus::Done
+		);
+	}
+
+	// Relations //
 
 	public function garden(): BelongsTo
 	{
