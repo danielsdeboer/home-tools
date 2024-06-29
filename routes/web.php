@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Gardening\ObservationController;
 use App\Http\Controllers\Gardening\PlantPhotoController;
 use App\Http\Controllers\GardeningController;
 use App\Http\Controllers\Gardening\GardenController;
@@ -44,4 +45,7 @@ Route::prefix('gardening')->name('gardening.')->group(function () {
 
 	Route::resource('plots.observations', PlotObservationController::class)
 		->only(['store', 'update']);
+
+	Route::get('observations', [ObservationController::class, 'index'])
+		->name('observations.index');
 })->scopeBindings();

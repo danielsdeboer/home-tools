@@ -18,7 +18,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Image\Enums\Fit;
 
 /**
- *
+ * 
  *
  * @property string $uuid
  * @property string $name
@@ -29,21 +29,24 @@ use Spatie\Image\Enums\Fit;
  * @property string|null $deleted_at
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Link> $links
  * @property-read int|null $links_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
+ * @property-read int|null $media_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Observation> $observations
  * @property-read int|null $observations_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Plot> $plots
  * @property-read int|null $plots_count
  * @method static \Database\Factories\PlantFactory factory($count = null, $state = [])
- * @method static \Illuminate\Database\Eloquent\Builder|Plant newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Plant newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Plant query()
- * @method static \Illuminate\Database\Eloquent\Builder|Plant whereBotanical($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Plant whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Plant whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Plant whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Plant whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Plant whereUuid($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Plant whereVariety($value)
+ * @method static Builder|Plant newModelQuery()
+ * @method static Builder|Plant newQuery()
+ * @method static Builder|Plant query()
+ * @method static Builder|Plant search(?string $term)
+ * @method static Builder|Plant whereBotanical($value)
+ * @method static Builder|Plant whereCreatedAt($value)
+ * @method static Builder|Plant whereDeletedAt($value)
+ * @method static Builder|Plant whereName($value)
+ * @method static Builder|Plant whereUpdatedAt($value)
+ * @method static Builder|Plant whereUuid($value)
+ * @method static Builder|Plant whereVariety($value)
  * @mixin \Eloquent
  */
 class Plant extends Model implements HasObservationsInterface, HasLinksInterface, HasMedia

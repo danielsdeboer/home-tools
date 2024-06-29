@@ -28,7 +28,7 @@
 		},
 		isCreating: {
 			type: Boolean,
-			required: true,
+			default: false,
 		},
 		editingUuid: {
 			type: String,
@@ -36,11 +36,11 @@
 		},
 		storeCb: {
 			type: Function as PropType<(form: InertiaForm) => void>,
-			required: true,
+			default: undefined,
 		},
 		updateCb: {
 			type: Function as PropType<(form: InertiaForm) => void>,
-			required: true,
+			default: undefined,
 		},
 	})
 
@@ -57,7 +57,7 @@
 		style="grid-template-columns: max-content min-content auto"
 		size="small"
 	>
-		<v-timeline-item v-if="isCreating" width="100%" fill-dot>
+		<v-timeline-item v-if="isCreating && storeCb" width="100%" fill-dot>
 			<template v-slot:opposite> New observation </template>
 
 			<v-alert>
@@ -93,7 +93,7 @@
 
 			<v-alert border="start" :border-color="observation.status">
 				<v-row>
-					<v-col v-if="isEditing(observation)">
+					<v-col v-if="isEditing(observation) && updateCb">
 						<ObservationForm
 							:observation="observation"
 							:errors="errors"
@@ -116,6 +116,7 @@
 							</div>
 
 							<v-btn
+								v-if="updateCb"
 								:icon="mdiPencil"
 								size="x-small"
 								@click="emit('initEdit', observation.uuid)"
@@ -124,11 +125,13 @@
 						</div>
 
 						<WhitespaceText :text="observation.content" />
+
+						<slot :observation="observation" />
 					</v-col>
 
 					<v-col cols="auto" v-if="!mobile">
 						<v-btn
-							v-if="!isEditing(observation)"
+							v-if="updateCb && !isEditing(observation)"
 							:icon="mdiPencil"
 							size="x-small"
 							@click="emit('initEdit', observation.uuid)"

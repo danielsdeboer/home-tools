@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Packets\Plots;
+namespace App\Http\Packets\Gardening\Plots;
 
 use App\Http\Packets\ModelPacket;
 use App\Models\Plot;

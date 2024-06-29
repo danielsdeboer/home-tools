@@ -41,7 +41,6 @@
 
 	const plotTableHeaders = [
 		{ title: 'Name', key: 'name' },
-		{ title: 'Plant', key: 'plant.name' },
 		{
 			title: 'Planted On',
 			key: 'planted_at',
@@ -173,12 +172,6 @@
 					<template #item.name="{ item }">
 						<Link :href="route('gardening.plots.show', item)">
 							{{ item.name }}
-						</Link>
-					</template>
-
-					<template #item.plant.name="{ item }">
-						<Link :href="route('gardening.plants.show', item.plant)">
-							{{ item.plant.name }}
 						</Link>
 					</template>
 				</v-data-table>

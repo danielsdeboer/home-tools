@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Packets\Gardens;
+namespace App\Http\Packets\Gardening\Gardens;
 
 use App\Models\Plot;
 use JsonSerializable;
@@ -18,10 +18,6 @@ class GardenPlotPacket implements JsonSerializable
 			'name' => $this->plot->name,
 			'description' => $this->plot->description,
 			'planted_at' => $this->plot->planted_at,
-			'plant' => [
-				'uuid' => $this->plot->plant->getKey(),
-				'name' => $this->plot->plant->name,
-			],
 		];
 	}
 }

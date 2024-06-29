@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Packets\Plants;
+namespace App\Http\Packets\Gardening\Plants;
 
 use App\Http\Packets\CollectionPacket;
 use App\Http\Packets\ModelPacket;

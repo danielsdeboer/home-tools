@@ -1,10 +1,16 @@
-import { mdiGridLarge, mdiSelectMarker, mdiSprout } from '@mdi/js'
+import {
+	mdiBinoculars,
+	mdiGridLarge,
+	mdiSelectMarker,
+	mdiSprout,
+} from '@mdi/js'
 
 export const moduleIcons = {
 	gardening: {
 		plant: mdiSprout,
 		garden: mdiGridLarge,
 		plot: mdiSelectMarker,
+		observation: mdiBinoculars,
 	},
 }
 

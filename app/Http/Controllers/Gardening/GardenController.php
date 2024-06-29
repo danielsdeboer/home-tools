@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Gardening;
 
 use App\Enums\ResourceIcon;
 use App\Http\Packets\CollectionPacket;
-use App\Http\Packets\Gardens\GardenPacket;
-use App\Http\Packets\Gardens\GardenPlantPacket;
-use App\Http\Packets\Gardens\GardensShowPacket;
+use App\Http\Packets\Gardening\Gardens\GardenPacket;
+use App\Http\Packets\Gardening\Gardens\GardenPlantPacket;
+use App\Http\Packets\Gardening\Gardens\GardensShowPacket;
 use App\Http\Packets\Page\BreadcrumbsPacket;
 use App\Http\Packets\Page\CrumbPacket;
 use App\Http\Packets\Page\HeaderPacket;

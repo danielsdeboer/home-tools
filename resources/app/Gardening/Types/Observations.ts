@@ -8,3 +8,9 @@ export interface Observation {
 	observed_at: string
 	status: 'info' | 'warning' | 'danger' | 'success'
 }
+
+export interface Observable {
+	observable_uuid: string
+	observable_type: 'garden' | 'plot' | 'plant'
+	observable_name: string
+}
