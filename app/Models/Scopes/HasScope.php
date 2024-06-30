@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Models\Scopes\Gardening;
+namespace App\Models\Scopes;
 
-use App\Models\Scopes\MultiScope;
-use App\Models\Scopes\ScopeInterface;
 use Illuminate\Database\Eloquent\Builder;
 
 class HasScope implements ScopeInterface

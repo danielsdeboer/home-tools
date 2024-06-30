@@ -18,7 +18,7 @@ use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
 use App\Http\Packets\Photos\PhotoPacket;
 use App\Models\Plant;
-use App\Models\Scopes\Gardening\HasScope;
+use App\Models\Scopes\HasScope;
 use App\Models\Scopes\Gardening\Plants\PlantSearchScope;
 use App\Models\Scopes\WhenScope;
 use Illuminate\Http\RedirectResponse;
