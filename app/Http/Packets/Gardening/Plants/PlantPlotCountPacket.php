@@ -12,6 +12,7 @@ class PlantPlotCountPacket extends ModelPacket
 	{
 		return [
 			'plots_count' => $this->model->plots_count,
+			'active_plots_count' => $this->model->active_plots_count,
 		];
 	}
 }

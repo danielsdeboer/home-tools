@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 /**
- * 
+ *
  *
  * @property string $uuid
  * @property string $garden_uuid
@@ -72,7 +72,7 @@ class Plot extends Model implements HasObservationsInterface
 	{
 		return new Attribute(
 			get: fn ($_, array $attrs) => $attrs['harvested_at'] === null
-				? PlotStatus::Current
+				? PlotStatus::Active
 				: PlotStatus::Done
 		);
 	}

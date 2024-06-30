@@ -18,6 +18,7 @@ use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
 use App\Http\Packets\Photos\PhotoPacket;
 use App\Models\Plant;
+use App\Models\Scopes\Gardening\HasScope;
 use App\Models\Scopes\Gardening\Plants\PlantSearchScope;
 use App\Models\Scopes\WhenScope;
 use Illuminate\Http\RedirectResponse;
@@ -44,6 +45,16 @@ class PlantController
 			fn () => new PlantSearchScope($request->input('search')),
 		);
 
+		$activeScope = new WhenScope(
+			$request->boolean('active'),
+			fn () => new HasScope('activePlots'),
+		);
+
+		$plants = Plant::withCount(['plots', 'activePlots'])
+			->orderBy('name')
+			->scope($searchScope, $activeScope)
+			->paginate(perPage: 24);
+
         return Inertia::render('Gardening/Pages/Plants/PlantsIndex', [
 			'page' => new PagePacket(
 				createRoute: route('gardening.plants.create'),
@@ -51,14 +62,10 @@ class PlantController
 				header: new HeaderPacket('Plants', ResourceIcon::Plant),
 			),
 			'plants' => new PaginationPacket(
-				Plant::withCount('plots')
-					->orderBy('name')
-					->scope($searchScope)
-					->paginate(perPage: 24),
-				fn (Plant $plant) => new ComboPacket(
-					$plant,
-					PlantPacket::class,
-					PlantPlotCountPacket::class,
+				$plants,
+				fn (Plant $plant) => new MergePacket(
+					new PlantPacket($plant),
+					new PlantPlotCountPacket($plant),
 				),
 			),
 		]);

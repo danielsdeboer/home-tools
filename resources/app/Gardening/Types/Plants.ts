@@ -21,4 +21,5 @@ export interface PlantsCount {
 
 export interface PlantPlotsCount {
 	plots_count: number
+	active_plots_count: number
 }

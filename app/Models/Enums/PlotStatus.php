@@ -4,6 +4,6 @@ namespace App\Models\Enums;
 
 enum PlotStatus: string
 {
-	case Current = 'current';
+	case Active = 'active';
 	case Done = 'done';
 }

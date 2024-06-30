@@ -6,6 +6,7 @@ use App\Models\Links\HasLinksInterface;
 use App\Models\Links\HasLinksTrait;
 use App\Models\Observations\HasObservationsInterface;
 use App\Models\Observations\HasObservationsTrait;
+use App\Models\Scopes\Gardening\Plots\PlotActiveScope;
 use App\Models\Traits\ScopeTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
@@ -19,7 +20,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Image\Enums\Fit;
 
 /**
- * 
+ *
  *
  * @property string $uuid
  * @property string $name
@@ -77,5 +78,10 @@ class Plant extends Model implements HasObservationsInterface, HasLinksInterface
 	public function plots(): BelongsToMany
 	{
 		return $this->belongsToMany(Plot::class);
+	}
+
+	public function activePlots(): BelongsToMany
+	{
+		return $this->plots()->scope(new PlotActiveScope());
 	}
 }
