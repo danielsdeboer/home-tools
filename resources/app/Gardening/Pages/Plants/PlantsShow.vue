@@ -18,10 +18,14 @@
 	import WhitespaceText from '../../../Common/Components/Form/Content/WhitespaceText.vue'
 	import PhotosForm from '../../Forms/PhotosForm.vue'
 	import { Photos } from '../../Types/Photo'
+	import { Project } from '../../Types/Projects'
+	import { resolveIcon } from '../../../Common/Icons/moduleIcons'
 
 	const props = defineProps({
 		plant: {
-			type: Object as PropType<Plant & PlantPlot & Photos>,
+			type: Object as PropType<
+				Plant & PlantPlot & Photos & { projects: Project[] }
+			>,
 			required: true,
 		},
 		errors: {
@@ -33,6 +37,8 @@
 			required: true,
 		},
 	})
+
+	const icon = resolveIcon('gardening')
 
 	const isCreatingObservation = ref(false)
 	const isEditingObservationUuid = ref(undefined)
@@ -55,6 +61,8 @@
 			value: (item: PlotShow) => parseAndFormatDate(item.planted_at),
 		},
 	]
+
+	const projectTableHeaders = [{ title: 'Project Name', key: 'name' }]
 
 	const storeObservation = (form: InertiaForm) => {
 		form.post(route('gardening.plants.observations.store', props.plant), {
@@ -246,6 +254,28 @@
 				>
 					<template #item.name="{ item }">
 						<Link :href="route('gardening.plots.show', item)">
+							{{ item.name }}
+						</Link>
+					</template>
+				</v-data-table>
+			</Section>
+
+			<Section>
+				<SectionHeader
+					:icon="icon('projects')"
+					:has-create="false"
+					text="Projects containing this plant"
+				/>
+
+				<v-data-table
+					class="mt-4"
+					:headers="projectTableHeaders"
+					:items="plant.projects"
+					:items-per-page="-1"
+					hide-default-footer
+				>
+					<template #item.name="{ item }">
+						<Link :href="route('gardening.projects.show', item)">
 							{{ item.name }}
 						</Link>
 					</template>

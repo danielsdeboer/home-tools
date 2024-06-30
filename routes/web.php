@@ -3,6 +3,8 @@
 use App\Http\Controllers\Gardening\ObservationController;
 use App\Http\Controllers\Gardening\PlantPhotoController;
 use App\Http\Controllers\Gardening\PlotPlantController;
+use App\Http\Controllers\Gardening\ProjectController;
+use App\Http\Controllers\Gardening\ProjectPlantController;
 use App\Http\Controllers\GardeningController;
 use App\Http\Controllers\Gardening\GardenController;
 use App\Http\Controllers\Gardening\GardenObservationController;
@@ -27,16 +29,26 @@ Route::prefix('gardening')->name('gardening.')->group(function () {
 		'gardens' => GardenController::class,
 		'plants' => PlantController::class,
 		'plots' => PlotController::class,
+		'projects' => ProjectController::class,
 	]);
+
+	// Garden //
 
 	Route::resource('gardens.plots', GardenPlotController::class)
 		->only(['store']);
 
+	Route::resource('gardens.observations', GardenObservationController::class)
+		->only(['store', 'update']);
+
+	// Plots //
+
 	Route::resource('plots.plants', PlotPlantController::class)
 		->only(['store']);
 
-	Route::resource('gardens.observations', GardenObservationController::class)
+	Route::resource('plots.observations', PlotObservationController::class)
 		->only(['store', 'update']);
+
+	// Plants //
 
 	Route::resource('plants.observations', PlantObservationController::class)
 		->only(['store', 'update']);
@@ -47,8 +59,17 @@ Route::prefix('gardening')->name('gardening.')->group(function () {
 	Route::resource('plants.links', PlantLinkController::class)
 		->only(['store', 'update']);
 
-	Route::resource('plots.observations', PlotObservationController::class)
-		->only(['store', 'update']);
+	// Projects //
+
+	Route::post(
+		'projects/{project}/plants/new',
+		[ProjectPlantController::class, 'new',]
+	)->name('projects.plants.new');
+
+	Route::resource('projects.plants', ProjectPlantController::class)
+		->only(['store']);
+
+	// Observations //
 
 	Route::get('observations', [ObservationController::class, 'index'])
 		->name('observations.index');

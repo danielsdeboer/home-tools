@@ -10,6 +10,7 @@ enum ResourceIcon: string implements JsonSerializable
 	case Plot = 'plot';
 	case Plant = 'plant';
 	case Observation = 'observation';
+	case Project = 'project';
 
 	public function jsonSerialize(): string
 	{

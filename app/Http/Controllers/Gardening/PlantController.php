@@ -8,6 +8,7 @@ use App\Http\Packets\ComboPacket;
 use App\Http\Packets\Gardening\Plants\PlantPacket;
 use App\Http\Packets\Gardening\Plants\PlantPlotCountPacket;
 use App\Http\Packets\Gardening\Plants\PlantPlotsPacket;
+use App\Http\Packets\Gardening\Projects\ProjectPacket;
 use App\Http\Packets\Links\LinksPacket;
 use App\Http\Packets\MergePacket;
 use App\Http\Packets\Observations\ObservationsPacket;
@@ -73,7 +74,7 @@ class PlantController
 
 	public function show(Plant $plant): Response
 	{
-		$plant->load('plots.garden', 'observations');
+		$plant->load('plots.garden', 'observations', 'media', 'projects');
 
 		return Inertia::render('Gardening/Pages/Plants/PlantsShow', [
 			'plant' => new MergePacket(
@@ -84,6 +85,10 @@ class PlantController
 				['photos' => new CollectionPacket(
 					$plant->getMedia('photos'),
 					PhotoPacket::class,
+				)],
+				['projects' => new CollectionPacket(
+					$plant->projects,
+					ProjectPacket::class,
 				)],
 
 			),

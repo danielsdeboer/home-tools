@@ -1,8 +1,8 @@
 <script setup lang="ts">
 	import Layout from '../../../Common/Components/Layout.vue'
 	import { PropType } from 'vue'
-	import PlantsForm from '../../Forms/PlantsForm.vue'
 	import { Page } from '../../../Common/Types/Page'
+	import ProjectForm from '../../Forms/ProjectForm.vue'
 
 	const props = defineProps({
 		errors: {
@@ -18,6 +18,6 @@
 
 <template>
 	<Layout :header="page.header" :breadcrumbs="page.breadcrumbs">
-		<PlantsForm :errors="props.errors" class="mt-8" />
+		<ProjectForm :errors="props.errors" class="mt-8" />
 	</Layout>
 </template>

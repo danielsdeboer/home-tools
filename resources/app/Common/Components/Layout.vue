@@ -12,6 +12,7 @@
 	import Breadcrumbs from './Nav/Breadcrumbs.vue'
 	import { Breadcrumb, Header } from '../Types/Page'
 	import { Link } from '@inertiajs/vue3'
+	import { mdiNotebook } from '@mdi/js/commonjs/mdi'
 
 	const props = defineProps({
 		createRoute: {
@@ -50,6 +51,10 @@
 
 		if (props.header.icon === 'plot') {
 			return mdiSelectMarker
+		}
+
+		if (props.header.icon === 'project') {
+			return mdiNotebook
 		}
 
 		return mdiSprout

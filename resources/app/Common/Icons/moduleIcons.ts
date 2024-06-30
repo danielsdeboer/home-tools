@@ -4,6 +4,7 @@ import {
 	mdiSelectMarker,
 	mdiSprout,
 } from '@mdi/js'
+import { mdiNotebook } from '@mdi/js/commonjs/mdi'
 
 export const moduleIcons = {
 	gardening: {
@@ -11,6 +12,7 @@ export const moduleIcons = {
 		garden: mdiGridLarge,
 		plot: mdiSelectMarker,
 		observation: mdiBinoculars,
+		project: mdiNotebook,
 	},
 }
 

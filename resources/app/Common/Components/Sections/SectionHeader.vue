@@ -31,10 +31,14 @@
 			<h2 v-text="text" />
 		</div>
 
-		<CreateCloseToggle
-			v-if="hasCreate"
-			:boolean="isCreating"
-			@toggle="emit('toggleCreate')"
-		/>
+		<div class="d-flex align-center ga-3">
+			<slot name="icons" />
+
+			<CreateCloseToggle
+				v-if="hasCreate"
+				:boolean="isCreating"
+				@toggle="emit('toggleCreate')"
+			/>
+		</div>
 	</div>
 </template>

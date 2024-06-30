@@ -20,7 +20,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Image\Enums\Fit;
 
 /**
- *
+ * 
  *
  * @property string $uuid
  * @property string $name
@@ -29,6 +29,8 @@ use Spatie\Image\Enums\Fit;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Plot> $activePlots
+ * @property-read int|null $active_plots_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Link> $links
  * @property-read int|null $links_count
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, Media> $media
@@ -37,6 +39,8 @@ use Spatie\Image\Enums\Fit;
  * @property-read int|null $observations_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Plot> $plots
  * @property-read int|null $plots_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Project> $projects
+ * @property-read int|null $projects_count
  * @method static \Database\Factories\PlantFactory factory($count = null, $state = [])
  * @method static Builder|Plant newModelQuery()
  * @method static Builder|Plant newQuery()
@@ -83,5 +87,10 @@ class Plant extends Model implements HasObservationsInterface, HasLinksInterface
 	public function activePlots(): BelongsToMany
 	{
 		return $this->plots()->scope(new PlotActiveScope());
+	}
+
+	public function projects(): BelongsToMany
+	{
+		return $this->belongsToMany(Project::class);
 	}
 }

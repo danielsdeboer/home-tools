@@ -15,6 +15,11 @@ class MultiScope implements ScopeInterface
 		$this->scopes = $scopes;
 	}
 
+	public function push(ScopeInterface $scope): void
+	{
+		$this->scopes[] = $scope;
+	}
+
 	public function apply(Builder $builder): Builder
 	{
 		return array_reduce(

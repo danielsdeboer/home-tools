@@ -1,9 +1,11 @@
 <script setup lang="ts">
 	import { required } from '../../Common/Validation/required.js'
 	import { computed, PropType, ref } from 'vue'
-	import { useForm } from '@inertiajs/vue3'
+	import { InertiaForm, useForm } from '@inertiajs/vue3'
 	import FormErrors from '../../Common/Components/Form/FormErrors.vue'
 	import { Plant } from '../Types/Plants'
+
+	const emit = defineEmits<{ (e: 'cancel'): void }>()
 
 	const props = defineProps({
 		errors: {
@@ -13,6 +15,14 @@
 		plant: {
 			type: Object as PropType<Plant>,
 			default: undefined,
+		},
+		storeCb: {
+			type: Function as PropType<(form: InertiaForm) => void>,
+			default: () => undefined,
+		},
+		cancel: {
+			type: Boolean,
+			default: false,
 		},
 	})
 
@@ -27,6 +37,11 @@
 	const buttonText = computed(() => (props.plant ? 'Update' : 'Create'))
 
 	const persist = () => {
+		if (props.storeCb) {
+			props.storeCb(form)
+			return
+		}
+
 		if (props.plant) {
 			form.patch(route('gardening.plants.update', props.plant))
 		} else {
@@ -60,13 +75,30 @@
 			class="mb-2"
 		/>
 
-		<v-btn
-			class="mt-2"
-			type="submit"
-			block
-			:loading="form.processing"
-			:disabled="!formIsValid || form.processing"
-			:text="buttonText"
-		/>
+		<v-row>
+			<v-col>
+				<v-btn
+					v-if="cancel"
+					class="mt-2"
+					block
+					:loading="form.processing"
+					:disabled="form.processing"
+					text="Cancel"
+					color="error"
+					@click="emit('cancel')"
+				/>
+			</v-col>
+
+			<v-col>
+				<v-btn
+					class="mt-2"
+					type="submit"
+					block
+					:loading="form.processing"
+					:disabled="!formIsValid || form.processing"
+					:text="buttonText"
+				/>
+			</v-col>
+		</v-row>
 	</v-form>
 </template>

@@ -16,7 +16,6 @@ use App\Http\Packets\Page\CrumbPacket;
 use App\Http\Packets\Page\HeaderPacket;
 use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
-use App\Http\Packets\Plots\PlotObservationCountPacket;
 use App\Models\Garden;
 use App\Models\Plant;
 use App\Models\Plot;

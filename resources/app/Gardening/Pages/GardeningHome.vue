@@ -61,6 +61,22 @@
 
 			<v-col cols="12" md="4">
 				<Link
+					:href="route('gardening.projects.index')"
+					class="text-decoration-none"
+				>
+					<v-card
+						title="Projects"
+						text="Create lists of plants for specific purposes."
+						:prepend-icon="icon('project')"
+						link
+						height="100%"
+						class="px-6 py-4"
+					/>
+				</Link>
+			</v-col>
+
+			<v-col cols="12" md="4">
+				<Link
 					:href="route('gardening.observations.index')"
 					class="text-decoration-none"
 				>
