@@ -23,7 +23,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use Laravel\Prompts\Key;
 
 class ProjectController
 {
@@ -70,8 +69,6 @@ class ProjectController
 
 	public function show(Project $project): Response
 	{
-		$project->load(['plants']);
-
 		return Inertia::render('Gardening/Pages/Projects/ProjectsShow', [
 			'page' => new PagePacket(
 				editRoute: route('gardening.projects.edit', $project),
@@ -80,13 +77,18 @@ class ProjectController
 			),
 			'project' => new MergePacket(
 				new ProjectPacket($project),
-				new KeyPacket('plants', new CollectionPacket(
-					$project->plants,
+				new KeyPacket(
+					'plants', new CollectionPacket(
+					$project->plants()
+						->orderBy('name')
+						->orderBy('variety')
+						->get(),
 					fn (Plant $plant) => new MergePacket(
 						new PlantPacket($plant),
-						new ProjectPlantPacket($plant)
+						new ProjectPlantPacket($plant),
 					),
-				)),
+				),
+				),
 			),
 			'plants' => new ModelSelectPacket(new Plant(), ['name', 'variety']),
 		]);
