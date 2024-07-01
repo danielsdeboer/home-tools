@@ -44,6 +44,6 @@ class Project extends Model
 
 	public function plants(): BelongsToMany
 	{
-		return $this->belongsToMany(Plant::class);
+		return $this->belongsToMany(Plant::class)->withPivot(['notes']);
 	}
 }

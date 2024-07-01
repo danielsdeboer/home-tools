@@ -20,7 +20,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Image\Enums\Fit;
 
 /**
- * 
+ *
  *
  * @property string $uuid
  * @property string $name
@@ -91,6 +91,6 @@ class Plant extends Model implements HasObservationsInterface, HasLinksInterface
 
 	public function projects(): BelongsToMany
 	{
-		return $this->belongsToMany(Project::class);
+		return $this->belongsToMany(Project::class)->withPivot(['notes']);
 	}
 }

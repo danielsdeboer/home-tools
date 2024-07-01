@@ -67,7 +67,7 @@ Route::prefix('gardening')->name('gardening.')->group(function () {
 	)->name('projects.plants.new');
 
 	Route::resource('projects.plants', ProjectPlantController::class)
-		->only(['store']);
+		->only(['store', 'update']);
 
 	// Observations //
 

@@ -6,6 +6,8 @@ use App\Enums\ResourceIcon;
 use App\Http\Packets\CollectionPacket;
 use App\Http\Packets\Gardening\Plants\PlantPacket;
 use App\Http\Packets\Gardening\Projects\ProjectPacket;
+use App\Http\Packets\Gardening\Projects\ProjectPlantPacket;
+use App\Http\Packets\KeyPacket;
 use App\Http\Packets\MergePacket;
 use App\Http\Packets\ModelSelectPacket;
 use App\Http\Packets\Page\BreadcrumbsPacket;
@@ -21,6 +23,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Laravel\Prompts\Key;
 
 class ProjectController
 {
@@ -77,12 +80,13 @@ class ProjectController
 			),
 			'project' => new MergePacket(
 				new ProjectPacket($project),
-				[
-					'plants' => new CollectionPacket(
-						$project->plants,
-						PlantPacket::class,
+				new KeyPacket('plants', new CollectionPacket(
+					$project->plants,
+					fn (Plant $plant) => new MergePacket(
+						new PlantPacket($plant),
+						new ProjectPlantPacket($plant)
 					),
-				],
+				)),
 			),
 			'plants' => new ModelSelectPacket(new Plant(), ['name', 'variety']),
 		]);

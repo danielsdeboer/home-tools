@@ -13,14 +13,18 @@
 			default: () => ({}),
 		},
 		plant: {
-			type: Object as PropType<Plant>,
+			type: Object as PropType<Plant & { notes?: string }>,
 			default: undefined,
 		},
 		storeCb: {
 			type: Function as PropType<(form: InertiaForm) => void>,
-			default: () => undefined,
+			default: undefined,
 		},
 		cancel: {
+			type: Boolean,
+			default: false,
+		},
+		notes: {
 			type: Boolean,
 			default: false,
 		},
@@ -30,6 +34,7 @@
 		name: props.plant?.name || null,
 		variety: props.plant?.variety || null,
 		botanical: props.plant?.botanical || null,
+		notes: props.plant?.notes || null,
 	})
 
 	const formIsValid = ref(false)
@@ -75,10 +80,17 @@
 			class="mb-2"
 		/>
 
+		<v-textarea
+			v-if="notes"
+			v-model="form.notes"
+			label="Notes (Optional)"
+			:readonly="form.processing"
+			class="mt-4"
+		/>
+
 		<v-row>
-			<v-col>
+			<v-col v-if="cancel">
 				<v-btn
-					v-if="cancel"
 					class="mt-2"
 					block
 					:loading="form.processing"
@@ -97,6 +109,7 @@
 					:loading="form.processing"
 					:disabled="!formIsValid || form.processing"
 					:text="buttonText"
+					color="primary"
 				/>
 			</v-col>
 		</v-row>

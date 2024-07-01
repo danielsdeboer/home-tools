@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Gardening;
 
 use App\Enums\ResourceIcon;
 use App\Http\Packets\CollectionPacket;
-use App\Http\Packets\ComboPacket;
 use App\Http\Packets\Gardening\Plants\PlantPacket;
 use App\Http\Packets\Gardening\Plants\PlantPlotCountPacket;
 use App\Http\Packets\Gardening\Plants\PlantPlotsPacket;

@@ -8,17 +8,17 @@
 		},
 	})
 
-	const lines = computed(() => props.text.split('\n'))
+	const lines = computed(() => props.text.split('\n').filter((p) => !!p))
 </script>
 
 <template>
-	<div>
+	<div class="paragraphs">
 		<p v-for="line in lines" :key="line">{{ line }}</p>
 	</div>
 </template>
 
 <style lang="css" scoped>
-	p::after {
-		content: '\00a0 ';
+	.paragraphs > p:not(:last-of-type) {
+		margin-bottom: 1rem;
 	}
 </style>

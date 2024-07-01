@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import Layout from '../../../Common/Components/Layout.vue'
-	import { Prop, PropType, ref } from 'vue'
+	import { computed, Prop, PropType, ref } from 'vue'
 	import { Plant } from '../../Types/Plants'
 	import { Page } from '../../../Common/Types/Page'
 	import SectionList from '../../../Common/Components/Sections/SectionList.vue'
@@ -8,13 +8,13 @@
 	import WhitespaceText from '../../../Common/Components/Form/Content/WhitespaceText.vue'
 	import { Project } from '../../Types/Projects'
 	import SectionHeader from '../../../Common/Components/Sections/SectionHeader.vue'
-	import { mdiSprout } from '@mdi/js'
-	import { InertiaForm, Link, useForm } from '@inertiajs/vue3'
-	import { requiredField } from '../../../Common/Validation/required'
-	import FormErrors from '../../../Common/Components/Form/FormErrors.vue'
+	import { mdiPencil, mdiSprout } from '@mdi/js'
+	import { InertiaForm, Link } from '@inertiajs/vue3'
 	import { Select } from '../../../Common/Types/Select'
 	import PlantsForm from '../../Forms/PlantsForm.vue'
 	import { mdiNotebookPlus } from '@mdi/js/commonjs/mdi'
+	import PlantAddForm from './ProjectsShow/PlantAddForm.vue'
+	import PlantEditForm from './ProjectsShow/PlantEditForm.vue'
 
 	const props = defineProps({
 		project: {
@@ -41,29 +41,21 @@
 		{ title: 'Plant Name', key: 'name' },
 		{ title: 'Variety', key: 'variety' },
 		{ title: 'Botanical Name', key: 'botanical' },
+		{ title: 'Notes', key: 'notes' },
+		{ title: 'Actions', key: 'actions' },
 	]
 
 	// Plants Add //
 
 	const isAddingPlant = ref(false)
-	const plantForm = useForm({ plant_uuid: null })
-	const plantFormIsValid = ref(false)
-
-	const addPlant = () => {
-		plantForm.post(route('gardening.projects.plants.store', props.project), {
-			onSuccess: () => {
-				isAddingPlant.value = false
-				plantForm.reset()
-			},
-		})
-	}
-
-	// Plants Create & Add //
-
 	const isCreatingPlant = ref(false)
+	const isEditingPlantUuid = ref('')
+
+	const plantBeingEdited = computed(() =>
+		props.project.plants.find((p) => p.uuid === isEditingPlantUuid.value),
+	)
 
 	const createAndAddPlant = (form: InertiaForm) => {
-		console.log(form, props.project)
 		form.post(route('gardening.projects.plants.new', props.project), {
 			onSuccess: () => {
 				isCreatingPlant.value = false
@@ -72,13 +64,23 @@
 		})
 	}
 
-	const toggleForm = (form: 'create' | 'add') => {
-		if (form === 'create') {
-			isCreatingPlant.value = !isCreatingPlant.value
-			isAddingPlant.value = false
-		} else {
-			isAddingPlant.value = !isAddingPlant.value
-			isCreatingPlant.value = false
+	const toggleForm = (form: 'create' | 'add' | 'edit', uuid?: string) => {
+		switch (form) {
+			case 'create':
+				isCreatingPlant.value = !isCreatingPlant.value
+				isAddingPlant.value = false
+				isEditingPlantUuid.value = ''
+				break
+			case 'add':
+				isAddingPlant.value = !isAddingPlant.value
+				isCreatingPlant.value = false
+				isEditingPlantUuid.value = ''
+				break
+			case 'edit':
+				isEditingPlantUuid.value = uuid
+				isAddingPlant.value = false
+				isCreatingPlant.value = false
+				break
 		}
 	}
 </script>
@@ -114,41 +116,23 @@
 
 				<!-- Plant Add Form -->
 
-				<v-form
+				<PlantAddForm
 					v-if="isAddingPlant"
-					@submit.prevent="addPlant"
-					v-model="plantFormIsValid"
-					style="width: 100%"
-				>
-					<FormErrors :errors="errors" class="mb-4" />
+					:project="project"
+					:plants="plants"
+					:errors="errors"
+					@cancel="toggleForm('add')"
+				/>
 
-					<v-select
-						v-model="plantForm.plant_uuid"
-						label="Plant"
-						:rules="[requiredField('plant')]"
-						:readonly="plantForm.processing"
-						:items="plants"
-						class="mt-4"
-					/>
+				<!-- Plant Edit Form -->
 
-					<div class="d-flex ga-4 mt-2">
-						<v-btn
-							color="error"
-							:disabled="plantForm.processing"
-							text="Cancel"
-							@click="toggleForm('add')"
-						/>
-
-						<v-btn
-							type="submit"
-							color="primary"
-							:loading="plantForm.processing"
-							:disabled="!plantFormIsValid || plantForm.processing"
-						>
-							Add Plant
-						</v-btn>
-					</div>
-				</v-form>
+				<PlantEditForm
+					v-if="isEditingPlantUuid"
+					:project="project"
+					:plant="plantBeingEdited"
+					:error="errors"
+					@cancel="toggleForm('edit')"
+				/>
 
 				<!-- Plant Create Form -->
 
@@ -158,6 +142,7 @@
 					:store-cb="createAndAddPlant"
 					@cancel="toggleForm('create')"
 					cancel
+					notes
 					class="mt-4"
 				/>
 
@@ -172,6 +157,21 @@
 						<Link :href="route('gardening.plants.show', item)">
 							{{ item.name }}
 						</Link>
+					</template>
+
+					<template #item.notes="{ item }">
+						<WhitespaceText v-if="item.notes" :text="item.notes" class="py-3" />
+
+						<span v-else>(Not Set)</span>
+					</template>
+
+					<template #item.actions="{ item }">
+						<v-btn
+							:icon="mdiPencil"
+							@click="toggleForm('edit', item.uuid)"
+							size="small"
+							flat
+						/>
 					</template>
 				</v-data-table>
 			</Section>
