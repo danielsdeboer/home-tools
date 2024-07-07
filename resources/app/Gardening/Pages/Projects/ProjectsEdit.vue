@@ -22,7 +22,7 @@
 </script>
 
 <template>
-	<Layout :header="page.header" :breadcrumbs="page.breadcrumbs">
+	<Layout :page="page">
 		<ProjectForm :errors="props.errors" :project="project" class="mt-8" />
 	</Layout>
 </template>

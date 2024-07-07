@@ -52,7 +52,7 @@
 </script>
 
 <template>
-	<Layout :header="page.header" :breadcrumbs="page.breadcrumbs">
+	<Layout :page="page">
 		<ObservationsTimeline
 			v-if="observations.data.length"
 			:observations="observations.data"

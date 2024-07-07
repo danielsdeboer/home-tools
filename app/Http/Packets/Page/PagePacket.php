@@ -11,6 +11,7 @@ class PagePacket implements JsonSerializable
 		protected readonly string|null $editRoute = null,
 		protected readonly BreadcrumbsPacket|null $breadcrumbs = null,
 		protected readonly HeaderPacket|null $header = null,
+		protected readonly HtmlTitlePacket|null $htmlTitle = null,
 	)
 	{
 	}
@@ -33,6 +34,10 @@ class PagePacket implements JsonSerializable
 
 		if ($this->header) {
 			$data['header'] = $this->header;
+		}
+
+		if ($this->htmlTitle) {
+			$data['html_title'] = $this->htmlTitle;
 		}
 
 		return $data;

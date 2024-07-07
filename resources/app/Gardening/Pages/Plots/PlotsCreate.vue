@@ -27,7 +27,7 @@
 </script>
 
 <template>
-	<Layout :header="page.header" :breadcrumbs="page.breadcrumbs">
+	<Layout :page="page">
 		<PlotsForm
 			:errors="errors"
 			:gardens="gardens"

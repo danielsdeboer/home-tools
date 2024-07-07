@@ -13,6 +13,7 @@ use App\Http\Packets\ModelSelectPacket;
 use App\Http\Packets\Page\BreadcrumbsPacket;
 use App\Http\Packets\Page\CrumbPacket;
 use App\Http\Packets\Page\HeaderPacket;
+use App\Http\Packets\Page\HtmlTitlePacket;
 use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
 use App\Models\Plant;
@@ -27,6 +28,7 @@ use Inertia\Response;
 class ProjectController
 {
 	private BreadcrumbsPacket $breadcrumbs;
+	private HtmlTitlePacket $htmlTitle;
 
 	public function __construct()
 	{
@@ -34,6 +36,8 @@ class ProjectController
 			new CrumbPacket('Gardening', route('gardening.index')),
 			new CrumbPacket('Projects', route('gardening.projects.index')),
 		);
+
+		$this->htmlTitle = new HtmlTitlePacket('Gardening', 'Projects');
 	}
 
 	public function index(Request $request): Response
@@ -56,6 +60,7 @@ class ProjectController
 				createRoute: route('gardening.projects.create'),
 				breadcrumbs: $this->breadcrumbs,
 				header: new HeaderPacket('Projects', ResourceIcon::Project),
+				htmlTitle: $this->htmlTitle,
 			),
 			'projects' => new PaginationPacket(
 				$projects,
@@ -74,6 +79,7 @@ class ProjectController
 				editRoute: route('gardening.projects.edit', $project),
 				breadcrumbs: $this->breadcrumbs->pushDisabled($project->name),
 				header: new HeaderPacket($project->name, ResourceIcon::Project),
+				htmlTitle: $this->htmlTitle->push($project->name),
 			),
 			'project' => new MergePacket(
 				new ProjectPacket($project),
@@ -103,6 +109,7 @@ class ProjectController
 					'Create a new project',
 					ResourceIcon::Project,
 				),
+				htmlTitle: $this->htmlTitle->push('Create a new project'),
 			),
 		]);
 	}
@@ -115,6 +122,9 @@ class ProjectController
 				header: new HeaderPacket(
 					sprintf('Edit Project - %s', $project->name),
 					ResourceIcon::Project,
+				),
+				htmlTitle: $this->htmlTitle->push(
+					sprintf('Edit project - %s', $project->name),
 				),
 			),
 			'project' => new MergePacket(

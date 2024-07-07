@@ -14,6 +14,7 @@ use App\Http\Packets\Observations\ObservationsPacket;
 use App\Http\Packets\Page\BreadcrumbsPacket;
 use App\Http\Packets\Page\CrumbPacket;
 use App\Http\Packets\Page\HeaderPacket;
+use App\Http\Packets\Page\HtmlTitlePacket;
 use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
 use App\Http\Packets\Photos\PhotoPacket;
@@ -29,6 +30,7 @@ use Inertia\Response;
 class PlantController
 {
 	private BreadcrumbsPacket $breadcrumbs;
+	private HtmlTitlePacket $htmlTitle;
 
 	public function __construct()
 	{
@@ -36,6 +38,8 @@ class PlantController
 			new CrumbPacket('Gardening', route('gardening.index')),
 			new CrumbPacket('Plants', route('gardening.plants.index')),
 		);
+
+		$this->htmlTitle = new HtmlTitlePacket('Gardening', 'Plants');
 	}
 
     public function index(Request $request): Response
@@ -60,6 +64,7 @@ class PlantController
 				createRoute: route('gardening.plants.create'),
 				breadcrumbs: $this->breadcrumbs,
 				header: new HeaderPacket('Plants', ResourceIcon::Plant),
+				htmlTitle: $this->htmlTitle,
 			),
 			'plants' => new PaginationPacket(
 				$plants,
@@ -97,6 +102,7 @@ class PlantController
 					new CrumbPacket($plant->name, '', disabled: true),
 				),
 				header: new HeaderPacket($plant->name, ResourceIcon::Plant),
+				htmlTitle: $this->htmlTitle->push($plant->name),
 			),
 		]);
 	}
@@ -110,6 +116,7 @@ class PlantController
 					'Create a new plant',
 					ResourceIcon::Plant,
 				),
+				htmlTitle: $this->htmlTitle->push('Create a new plant'),
 			),
 		]);
 	}
@@ -122,6 +129,9 @@ class PlantController
 				header: new HeaderPacket(
 					sprintf('Edit %s', $plant->name),
 					ResourceIcon::Plant,
+				),
+				htmlTitle: $this->htmlTitle->push(
+					sprintf('Edit plant - %s', $plant->name)
 				),
 			),
 			'plant' => new PlantPacket($plant),

@@ -32,11 +32,7 @@
 </script>
 
 <template>
-	<Layout
-		:create-route="page.create_route"
-		:header="page.header"
-		:breadcrumbs="page.breadcrumbs"
-	>
+	<Layout :page="page">
 		<v-data-table-server
 			:items-per-page="gardens.page_size"
 			:items-per-page-options="[gardens.page_size]"

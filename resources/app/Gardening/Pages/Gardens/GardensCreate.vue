@@ -17,7 +17,7 @@
 </script>
 
 <template>
-	<Layout :breadcrumbs="page.breadcrumbs" :header="page.header">
+	<Layout :page="page">
 		<GardensForm class="mt-8" :errors="errors" />
 	</Layout>
 </template>

@@ -16,4 +16,5 @@ export interface Page {
 	edit_route?: string
 	breadcrumbs?: Breadcrumb[]
 	header?: Header
+	html_title?: string
 }

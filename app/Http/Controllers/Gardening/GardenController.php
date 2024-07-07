@@ -10,6 +10,7 @@ use App\Http\Packets\Gardening\Gardens\GardensShowPacket;
 use App\Http\Packets\Page\BreadcrumbsPacket;
 use App\Http\Packets\Page\CrumbPacket;
 use App\Http\Packets\Page\HeaderPacket;
+use App\Http\Packets\Page\HtmlTitlePacket;
 use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
 use App\Models\Garden;
@@ -22,6 +23,7 @@ use Inertia\Response;
 class GardenController
 {
 	private BreadcrumbsPacket $breadcrumbs;
+	private HtmlTitlePacket $htmlTitle;
 
 	public function __construct()
 	{
@@ -29,6 +31,8 @@ class GardenController
 			new CrumbPacket('Gardening', route('gardening.index')),
 			new CrumbPacket('Gardens', route('gardening.gardens.index')),
 		);
+
+		$this->htmlTitle = new HtmlTitlePacket('Gardening', 'Gardens');
 	}
 
 	public function index(): Response
@@ -38,6 +42,7 @@ class GardenController
 				createRoute: route('gardening.gardens.create'),
 				breadcrumbs: $this->breadcrumbs,
 				header: new HeaderPacket('Gardens', ResourceIcon::Garden),
+				htmlTitle: $this->htmlTitle,
 			),
 			'gardens' => new PaginationPacket(
 				Garden::orderBy('name')->paginate(perPage: 24),
@@ -55,6 +60,7 @@ class GardenController
 					new CrumbPacket($garden->name, '', disabled: true),
 				),
 				header: new HeaderPacket($garden->name, ResourceIcon::Garden),
+				htmlTitle: $this->htmlTitle->push($garden->name),
 			),
 			'garden' => new GardensShowPacket($garden),
 			'plants' => new CollectionPacket(
@@ -73,6 +79,7 @@ class GardenController
 					'Create a new garden',
 					ResourceIcon::Garden,
 				),
+				htmlTitle: $this->htmlTitle->push('Create a new garden'),
 			),
 		]);
 	}
@@ -83,10 +90,14 @@ class GardenController
 			'garden' => new GardensShowPacket($garden),
 			'page' => new PagePacket(
 				breadcrumbs: $this->breadcrumbs->pushDisabled(
-					sprintf('Edit: %s', $garden->name)),
+					sprintf('Edit: %s', $garden->name),
+				),
 				header: new HeaderPacket(
 					sprintf('Edit Garden - %s', $garden->name),
 					ResourceIcon::Garden,
+				),
+				htmlTitle: $this->htmlTitle->push(
+					sprintf('Edit garden - %s', $garden->name),
 				),
 			),
 		]);

@@ -14,6 +14,7 @@ use App\Http\Packets\Observations\ObservationsPacket;
 use App\Http\Packets\Page\BreadcrumbsPacket;
 use App\Http\Packets\Page\CrumbPacket;
 use App\Http\Packets\Page\HeaderPacket;
+use App\Http\Packets\Page\HtmlTitlePacket;
 use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
 use App\Models\Garden;
@@ -30,6 +31,7 @@ use Inertia\Response;
 class PlotController
 {
 	private BreadcrumbsPacket $breadcrumbs;
+	private HtmlTitlePacket $htmlTitle;
 
 	public function __construct()
 	{
@@ -37,6 +39,8 @@ class PlotController
 			new CrumbPacket('Gardening', route('gardening.index')),
 			new CrumbPacket('Plots', route('gardening.plots.index')),
 		);
+
+		$this->htmlTitle = new HtmlTitlePacket('Gardening', 'Plots');
 	}
 
 	public function index(Request $request): Response
@@ -57,6 +61,7 @@ class PlotController
 				createRoute: route('gardening.plots.create'),
 				breadcrumbs: $this->breadcrumbs,
 				header: new HeaderPacket('Plots', ResourceIcon::Plot),
+				htmlTitle: $this->htmlTitle,
 			),
 			'plots' => new PaginationPacket(
 				$plots,
@@ -86,6 +91,7 @@ class PlotController
 				editRoute: route('gardening.plots.edit', $plot),
 				breadcrumbs: $this->breadcrumbs->pushDisabled($plot->name),
 				header: new HeaderPacket($plot->name, ResourceIcon::Plot),
+				htmlTitle: $this->htmlTitle->push($plot->name),
 			),
 			'plot' => new MergePacket(
 				new PlotPacket($plot),
@@ -109,6 +115,7 @@ class PlotController
 					'Create a new plot',
 					ResourceIcon::Plot,
 				),
+				htmlTitle: $this->htmlTitle->push('Create a new plot'),
 			),
 			'gardens' => new CollectionPacket(
 				Garden::all(),
@@ -125,6 +132,9 @@ class PlotController
 				header: new HeaderPacket(
 					sprintf('Edit Plot - %s', $plot->name),
 					ResourceIcon::Plot,
+				),
+				htmlTitle: $this->htmlTitle->push(
+					sprintf('Edit plot - %s', $plot->name),
 				),
 			),
 			'gardens' => new CollectionPacket(

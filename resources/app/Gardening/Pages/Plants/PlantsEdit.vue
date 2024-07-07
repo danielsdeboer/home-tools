@@ -22,7 +22,7 @@
 </script>
 
 <template>
-	<Layout :header="page.header" :breadcrumbs="page.breadcrumbs">
+	<Layout :page="page">
 		<PlantsForm :errors="props.errors" :plant="plant" class="mt-8" />
 	</Layout>
 </template>

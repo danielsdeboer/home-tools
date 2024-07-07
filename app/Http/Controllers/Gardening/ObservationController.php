@@ -7,6 +7,7 @@ use App\Http\Packets\Gardening\GardeningObservationPacket;
 use App\Http\Packets\Page\BreadcrumbsPacket;
 use App\Http\Packets\Page\CrumbPacket;
 use App\Http\Packets\Page\HeaderPacket;
+use App\Http\Packets\Page\HtmlTitlePacket;
 use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
 use App\Models\Observation;
@@ -27,6 +28,8 @@ class ObservationController
 				route('gardening.observations.index'),
 			),
 		);
+
+		$this->htmlTitle = new HtmlTitlePacket('Gardening', 'Observations');
 	}
 
 	public function index(): Response
@@ -45,6 +48,7 @@ class ObservationController
 					header: new HeaderPacket(
 						'Observations', ResourceIcon::Observation,
 					),
+					htmlTitle: $this->htmlTitle,
 				),
 				'observations' => new PaginationPacket(
 					$observations,

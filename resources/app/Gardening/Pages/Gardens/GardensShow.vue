@@ -80,11 +80,7 @@
 </script>
 
 <template>
-	<Layout
-		:edit-route="page.edit_route"
-		:breadcrumbs="page.breadcrumbs"
-		:header="page.header"
-	>
+	<Layout :page="page">
 		<SectionList class="mt-8">
 			<Section>
 				<v-row>

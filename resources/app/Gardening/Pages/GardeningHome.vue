@@ -7,7 +7,7 @@
 </script>
 
 <template>
-	<Layout>
+	<Layout html-title="Gardening / Home Tools">
 		<h1>Gardening</h1>
 
 		<v-row class="mt-4">

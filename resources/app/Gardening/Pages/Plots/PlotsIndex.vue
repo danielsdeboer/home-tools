@@ -65,11 +65,7 @@
 </script>
 
 <template>
-	<Layout
-		:create-route="page.create_route"
-		:header="page.header"
-		:breadcrumbs="page.breadcrumbs"
-	>
+	<Layout :page="page">
 		<v-data-table-server
 			:items-per-page="plots.page_size"
 			:items-per-page-options="[plots.page_size]"
