@@ -20,7 +20,7 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Image\Enums\Fit;
 
 /**
- *
+ * 
  *
  * @property string $uuid
  * @property string $name
