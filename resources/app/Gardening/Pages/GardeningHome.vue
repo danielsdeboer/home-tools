@@ -1,95 +1,48 @@
 <script setup lang="ts">
 	import Layout from '../../Common/Components/Layout.vue'
-	import { Link } from '@inertiajs/vue3'
 	import { resolveIcon } from '../../Common/Icons/moduleIcons'
+	import HomeCardGrid from '../../Common/Components/Cards/HomeCardGrid.vue'
 
 	const icon = resolveIcon('gardening')
+
+	const cards = [
+		{
+			title: 'Gardens',
+			body: 'Create and update gardens and their contents.',
+			icon: icon('garden'),
+			href: route('gardening.gardens.index'),
+		},
+		{
+			title: 'Plants',
+			body: 'Create and update plants.',
+			icon: icon('plant'),
+			href: route('gardening.plants.index'),
+		},
+		{
+			title: 'Plots',
+			body: 'Add plants to gardens; add observations; track planting, germination, and harvest dates.',
+			icon: icon('plot'),
+			href: route('gardening.plots.index'),
+		},
+		{
+			title: 'Projects',
+			body: 'Create lists of plants for specific purposes.',
+			icon: icon('project'),
+			href: route('gardening.projects.index'),
+		},
+		{
+			title: 'Observations',
+			body: 'View observations from gardens, plants, and plots.',
+			icon: icon('observation'),
+			href: route('gardening.observations.index'),
+		},
+	]
 </script>
 
 <template>
 	<Layout html-title="Gardening / Home Tools">
-		<h1>Gardening</h1>
+		<h1>Gardening Home</h1>
 
-		<v-row class="mt-4">
-			<v-col cols="12" md="4">
-				<Link
-					:href="route('gardening.gardens.index')"
-					class="text-decoration-none"
-				>
-					<v-card
-						title="Gardens"
-						text="Create and update gardens and their contents."
-						:prepend-icon="icon('garden')"
-						link
-						height="100%"
-						class="px-6 py-4"
-					/>
-				</Link>
-			</v-col>
-
-			<v-col cols="12" md="4">
-				<Link
-					:href="route('gardening.plants.index')"
-					class="text-decoration-none"
-				>
-					<v-card
-						title="Plants"
-						text="Create and update plants."
-						:prepend-icon="icon('plant')"
-						link
-						height="100%"
-						class="px-6 py-4"
-					/>
-				</Link>
-			</v-col>
-
-			<v-col cols="12" md="4">
-				<Link
-					:href="route('gardening.plots.index')"
-					class="text-decoration-none"
-				>
-					<v-card
-						title="Plots"
-						text="Add plants to gardens; add observations; track planting, germination, and harvest dates."
-						:prepend-icon="icon('plot')"
-						link
-						height="100%"
-						class="px-6 py-4"
-					/>
-				</Link>
-			</v-col>
-
-			<v-col cols="12" md="4">
-				<Link
-					:href="route('gardening.projects.index')"
-					class="text-decoration-none"
-				>
-					<v-card
-						title="Projects"
-						text="Create lists of plants for specific purposes."
-						:prepend-icon="icon('project')"
-						link
-						height="100%"
-						class="px-6 py-4"
-					/>
-				</Link>
-			</v-col>
-
-			<v-col cols="12" md="4">
-				<Link
-					:href="route('gardening.observations.index')"
-					class="text-decoration-none"
-				>
-					<v-card
-						title="Observations"
-						text="View observations from gardens, plants, and plots."
-						:prepend-icon="icon('observation')"
-						link
-						height="100%"
-						class="px-6 py-4"
-					/>
-				</Link>
-			</v-col>
-		</v-row>
+		<HomeCardGrid :cards="cards" />
 	</Layout>
 </template>

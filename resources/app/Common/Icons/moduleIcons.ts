@@ -4,7 +4,7 @@ import {
 	mdiSelectMarker,
 	mdiSprout,
 } from '@mdi/js'
-import { mdiNotebook } from '@mdi/js/commonjs/mdi'
+import { mdiCube, mdiNotebook } from '@mdi/js/commonjs/mdi'
 
 export const moduleIcons = {
 	gardening: {
@@ -13,6 +13,9 @@ export const moduleIcons = {
 		plot: mdiSelectMarker,
 		observation: mdiBinoculars,
 		project: mdiNotebook,
+	},
+	shopping: {
+		items: mdiCube,
 	},
 }
 

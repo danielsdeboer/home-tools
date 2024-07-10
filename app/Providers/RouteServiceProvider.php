@@ -13,7 +13,8 @@ class RouteServiceProvider extends ServiceProvider
     {
         $this->routes(function () {
             Route::middleware(['web', 'auth'])
-                ->group(base_path('routes/web.php'));
+                ->group(base_path('routes/web.php'))
+				->group(base_path('routes/shopping.php'));
 
 			Route::middleware(['web'])
 				->group(base_path('routes/auth.php'));
