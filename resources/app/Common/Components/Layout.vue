@@ -7,6 +7,7 @@
 		mdiGridLarge,
 		mdiPencil,
 		mdiSelectMarker,
+		mdiBookmarkMultiple,
 	} from '@mdi/js'
 	import { router } from '@inertiajs/vue3'
 	import Breadcrumbs from './Nav/Breadcrumbs.vue'
@@ -44,6 +45,7 @@
 	const items = [
 		{ title: 'Home', icon: mdiHome, href: '/home' },
 		{ title: 'Gardening', icon: mdiSprout, href: '/gardening' },
+		{ title: 'Bookmarks', icon: mdiBookmarkMultiple, href: '/bookmarks' },
 	]
 
 	const drawer = ref(false)
@@ -65,6 +67,10 @@
 
 		if (icon === 'project') {
 			return mdiNotebook
+		}
+
+		if (icon === 'bookmark') {
+			return mdiBookmarkMultiple
 		}
 
 		return mdiSprout

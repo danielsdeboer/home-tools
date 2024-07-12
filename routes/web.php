@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Bookmarks\BookmarkController;
 use App\Http\Controllers\Gardening\ObservationController;
 use App\Http\Controllers\Gardening\PlantPhotoController;
 use App\Http\Controllers\Gardening\PlotPlantController;
@@ -74,3 +75,7 @@ Route::prefix('gardening')->name('gardening.')->group(function () {
 	Route::get('observations', [ObservationController::class, 'index'])
 		->name('observations.index');
 })->scopeBindings();
+
+Route::group([], function () {
+	Route::resource('bookmarks', BookmarkController::class)->except(['show']);
+});
