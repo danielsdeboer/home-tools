@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import Layout from '../../Common/Components/Layout.vue'
-	import { mdiShopping, mdiSprout } from '@mdi/js'
+	import { mdiBookmarkMultiple, mdiShopping, mdiSprout } from '@mdi/js'
 	import HomeCardGrid from '../../Common/Components/Cards/HomeCardGrid.vue'
 
 	const cards = [
@@ -15,6 +15,12 @@
 			body: 'Create shopping lists and do stock counts.',
 			icon: mdiShopping,
 			href: route('shopping.index'),
+		},
+		{
+			title: 'Bookmarks',
+			body: 'Create and update bookmarks.',
+			icon: mdiBookmarkMultiple,
+			href: route('bookmarks.index'),
 		},
 	]
 </script>

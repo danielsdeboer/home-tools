@@ -12,6 +12,7 @@ enum ResourceIcon: string implements JsonSerializable
 	case Observation = 'observation';
 	case Project = 'project';
 	case Bookmark = 'bookmark';
+	case ShoppingItem = 'shopping-item';
 
 	public function jsonSerialize(): string
 	{

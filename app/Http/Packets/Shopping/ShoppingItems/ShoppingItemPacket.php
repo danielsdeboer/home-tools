@@ -10,6 +10,6 @@ class ShoppingItemPacket extends ModelPacket
 {
 	public function pluckedData(): array
 	{
-		return ['uuid', 'name', 'location'];
+		return ['uuid', 'name'];
 	}
 }
