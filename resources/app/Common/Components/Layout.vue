@@ -8,12 +8,13 @@
 		mdiPencil,
 		mdiSelectMarker,
 		mdiBookmarkMultiple,
+		mdiShopping,
 	} from '@mdi/js'
 	import { router } from '@inertiajs/vue3'
 	import Breadcrumbs from './Nav/Breadcrumbs.vue'
 	import { Breadcrumb, Header, Page } from '../Types/Page'
 	import { Link, Head } from '@inertiajs/vue3'
-	import { mdiNotebook } from '@mdi/js/commonjs/mdi'
+	import { mdiCube, mdiNotebook } from '@mdi/js/commonjs/mdi'
 
 	const props = defineProps({
 		createRoute: {
@@ -45,6 +46,7 @@
 	const items = [
 		{ title: 'Home', icon: mdiHome, href: '/home' },
 		{ title: 'Gardening', icon: mdiSprout, href: '/gardening' },
+		{ title: 'Shopping', icon: mdiShopping, href: '/shopping' },
 		{ title: 'Bookmarks', icon: mdiBookmarkMultiple, href: '/bookmarks' },
 	]
 
@@ -71,6 +73,10 @@
 
 		if (icon === 'bookmark') {
 			return mdiBookmarkMultiple
+		}
+
+		if (icon === 'shopping-item') {
+			return mdiCube
 		}
 
 		return mdiSprout
