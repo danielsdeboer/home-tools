@@ -92,7 +92,7 @@
 			</template>
 
 			<template #item.name="{ item }">
-				<Link :href="route('gardening.plots.show', item)">
+				<Link :href="route('admin.farm.plots.show', item)">
 					<v-icon
 						:icon="mdiCircle"
 						:color="item.status === 'done' ? 'error' : 'success'"
@@ -104,7 +104,7 @@
 			</template>
 
 			<template #item.garden.name="{ item }">
-				<Link :href="route('gardening.gardens.show', item.garden)">
+				<Link :href="route('admin.farm.gardens.show', item.garden)">
 					{{ item.garden.name }}
 				</Link>
 			</template>

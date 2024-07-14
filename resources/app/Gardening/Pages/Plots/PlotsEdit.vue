@@ -28,7 +28,7 @@
 	})
 
 	const update = (form: InertiaForm) => {
-		form.patch(route('gardening.plots.update', props.plot))
+		form.patch(route('admin.farm.plots.update', props.plot))
 	}
 </script>
 

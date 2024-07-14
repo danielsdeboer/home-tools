@@ -27,9 +27,9 @@
 
 	const persist = () => {
 		if (props.bookmark) {
-			form.patch(route('bookmarks.update', props.bookmark.uuid))
+			form.patch(route('admin.bookmarks.update', props.bookmark.uuid))
 		} else {
-			form.post(route('bookmarks.store'))
+			form.post(route('admin.bookmarks.store'))
 		}
 	}
 </script>

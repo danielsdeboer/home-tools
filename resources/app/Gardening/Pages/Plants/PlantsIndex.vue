@@ -98,7 +98,10 @@
 			</template>
 
 			<template #item.name="{ item }">
-				<Link :href="route('gardening.plants.show', item)" v-text="item.name" />
+				<Link
+					:href="route('admin.farm.plants.show', item)"
+					v-text="item.name"
+				/>
 			</template>
 		</v-data-table-server>
 	</Layout>

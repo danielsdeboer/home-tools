@@ -48,9 +48,9 @@
 		}
 
 		if (props.plant) {
-			form.patch(route('gardening.plants.update', props.plant))
+			form.patch(route('admin.farm.plants.update', props.plant))
 		} else {
-			form.post(route('gardening.plants.store'))
+			form.post(route('admin.farm.plants.store'))
 		}
 	}
 </script>

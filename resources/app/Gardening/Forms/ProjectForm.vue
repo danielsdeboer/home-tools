@@ -27,9 +27,9 @@
 
 	const persist = () => {
 		if (props.project) {
-			form.patch(route('gardening.projects.update', props.project))
+			form.patch(route('admin.farm.projects.update', props.project))
 		} else {
-			form.post(route('gardening.projects.store'))
+			form.post(route('admin.farm.projects.store'))
 		}
 	}
 </script>

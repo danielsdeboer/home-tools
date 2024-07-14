@@ -26,7 +26,7 @@
 
 	const persist = () => {
 		form.patch(
-			route('gardening.projects.plants.update', [props.project, props.plant]),
+			route('admin.farm.projects.plants.update', [props.project, props.plant]),
 			{
 				onSuccess: () => {
 					emit('cancel')

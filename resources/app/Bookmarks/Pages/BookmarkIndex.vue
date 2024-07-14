@@ -56,7 +56,7 @@
 			</template>
 
 			<template #item.actions="{ item }">
-				<Link :href="route('bookmarks.edit', item.uuid)">Edit</Link>
+				<Link :href="route('admin.bookmarks.edit', item.uuid)">Edit</Link>
 			</template>
 		</v-data-table-server>
 	</Layout>

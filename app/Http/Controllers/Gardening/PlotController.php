@@ -36,8 +36,8 @@ class PlotController
 	public function __construct()
 	{
 		$this->breadcrumbs = new BreadcrumbsPacket(
-			new CrumbPacket('Gardening', route('gardening.index')),
-			new CrumbPacket('Plots', route('gardening.plots.index')),
+			new CrumbPacket('Gardening', route('admin.farm.index')),
+			new CrumbPacket('Plots', route('admin.farm.plots.index')),
 		);
 
 		$this->htmlTitle = new HtmlTitlePacket('Gardening', 'Plots');
@@ -58,7 +58,7 @@ class PlotController
 
 		return Inertia::render('Gardening/Pages/Plots/PlotsIndex', [
 			'page' => new PagePacket(
-				createRoute: route('gardening.plots.create'),
+				createRoute: route('admin.farm.plots.create'),
 				breadcrumbs: $this->breadcrumbs,
 				header: new HeaderPacket('Plots', ResourceIcon::Plot),
 				htmlTitle: $this->htmlTitle,
@@ -88,7 +88,7 @@ class PlotController
 
 		return Inertia::render('Gardening/Pages/Plots/PlotsShow', [
 			'page' => new PagePacket(
-				editRoute: route('gardening.plots.edit', $plot),
+				editRoute: route('admin.farm.plots.edit', $plot),
 				breadcrumbs: $this->breadcrumbs->pushDisabled($plot->name),
 				header: new HeaderPacket($plot->name, ResourceIcon::Plot),
 				htmlTitle: $this->htmlTitle->push($plot->name),
@@ -161,7 +161,7 @@ class PlotController
 
 		$plot = Plot::create($validated);
 
-		return redirect()->route('gardening.plots.show', $plot);
+		return redirect()->route('admin.farm.plots.show', $plot);
 	}
 
 	public function update(Request $request, Plot $plot): RedirectResponse
@@ -177,6 +177,6 @@ class PlotController
 
 		$plot->update($validated);
 
-		return redirect()->route('gardening.plots.show', $plot);
+		return redirect()->route('admin.farm.plots.show', $plot);
 	}
 }

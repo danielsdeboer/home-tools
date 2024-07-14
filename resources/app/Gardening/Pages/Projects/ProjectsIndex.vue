@@ -53,7 +53,7 @@
 		>
 			<template #item.name="{ item }">
 				<Link
-					:href="route('gardening.projects.show', item)"
+					:href="route('admin.farm.projects.show', item)"
 					v-text="item.name"
 				/>
 			</template>

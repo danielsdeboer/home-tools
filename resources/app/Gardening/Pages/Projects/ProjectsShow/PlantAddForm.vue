@@ -28,7 +28,7 @@
 	const plantFormIsValid = ref(false)
 
 	const addPlant = () => {
-		plantForm.post(route('gardening.projects.plants.store', props.project), {
+		plantForm.post(route('admin.farm.projects.plants.store', props.project), {
 			onSuccess: () => {
 				emit('cancel')
 				plantForm.reset()

@@ -35,8 +35,8 @@ class PlantController
 	public function __construct()
 	{
 		$this->breadcrumbs = new BreadcrumbsPacket(
-			new CrumbPacket('Gardening', route('gardening.index')),
-			new CrumbPacket('Plants', route('gardening.plants.index')),
+			new CrumbPacket('Gardening', route('admin.farm.index')),
+			new CrumbPacket('Plants', route('admin.farm.plants.index')),
 		);
 
 		$this->htmlTitle = new HtmlTitlePacket('Gardening', 'Plants');
@@ -61,7 +61,7 @@ class PlantController
 
         return Inertia::render('Gardening/Pages/Plants/PlantsIndex', [
 			'page' => new PagePacket(
-				createRoute: route('gardening.plants.create'),
+				createRoute: route('admin.farm.plants.create'),
 				breadcrumbs: $this->breadcrumbs,
 				header: new HeaderPacket('Plants', ResourceIcon::Plant),
 				htmlTitle: $this->htmlTitle,
@@ -97,7 +97,7 @@ class PlantController
 
 			),
 			'page' => new PagePacket(
-				editRoute: route('gardening.plants.edit', $plant),
+				editRoute: route('admin.farm.plants.edit', $plant),
 				breadcrumbs: $this->breadcrumbs->push(
 					new CrumbPacket($plant->name, '', disabled: true),
 				),
@@ -148,7 +148,7 @@ class PlantController
 
 		$plant = Plant::create($validated);
 
-		return redirect()->route('gardening.plants.show', $plant);
+		return redirect()->route('admin.farm.plants.show', $plant);
 	}
 
 	public function update(Request $request, Plant $plant): RedirectResponse
@@ -161,6 +161,6 @@ class PlantController
 
 		$plant->update($validated);
 
-		return redirect()->route('gardening.plants.show', $plant);
+		return redirect()->route('admin.farm.plants.show', $plant);
 	}
 }

@@ -49,7 +49,7 @@
 	]
 
 	const storePlot = (form: InertiaForm) => {
-		form.post(route('gardening.gardens.plots.store', props.garden), {
+		form.post(route('admin.farm.gardens.plots.store', props.garden), {
 			onSuccess: () => {
 				isCreatingPlot.value = false
 			},
@@ -57,7 +57,7 @@
 	}
 
 	const storeObservation = (form: InertiaForm) => {
-		form.post(route('gardening.gardens.observations.store', props.garden), {
+		form.post(route('admin.farm.gardens.observations.store', props.garden), {
 			onSuccess: () => {
 				isCreatingObservation.value = false
 			},
@@ -66,7 +66,7 @@
 
 	const updateObservation = (form: InertiaForm, observation: Observation) => {
 		form.patch(
-			route('gardening.gardens.observations.update', {
+			route('admin.farm.gardens.observations.update', {
 				garden: props.garden.uuid,
 				observation: observation.uuid,
 			}),
@@ -166,7 +166,7 @@
 					:items="garden.plots"
 				>
 					<template #item.name="{ item }">
-						<Link :href="route('gardening.plots.show', item)">
+						<Link :href="route('admin.farm.plots.show', item)">
 							{{ item.name }}
 						</Link>
 					</template>

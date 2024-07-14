@@ -34,15 +34,15 @@
 
 	const routeFor = (observation: Observable) => {
 		if (observation.observable_type === 'plant') {
-			return route('gardening.plants.show', observation.observable_uuid)
+			return route('admin.farm.plants.show', observation.observable_uuid)
 		}
 
 		if (observation.observable_type === 'plot') {
-			return route('gardening.plots.show', observation.observable_uuid)
+			return route('admin.farm.plots.show', observation.observable_uuid)
 		}
 
 		if (observation.observable_type === 'garden') {
-			return route('gardening.gardens.show', observation.observable_uuid)
+			return route('admin.farm.gardens.show', observation.observable_uuid)
 		}
 
 		return '#'

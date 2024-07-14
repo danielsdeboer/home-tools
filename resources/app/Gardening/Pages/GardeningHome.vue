@@ -10,31 +10,31 @@
 			title: 'Gardens',
 			body: 'Create and update gardens and their contents.',
 			icon: icon('garden'),
-			href: route('gardening.gardens.index'),
+			href: route('admin.farm.gardens.index'),
 		},
 		{
 			title: 'Plants',
 			body: 'Create and update plants.',
 			icon: icon('plant'),
-			href: route('gardening.plants.index'),
+			href: route('admin.farm.plants.index'),
 		},
 		{
 			title: 'Plots',
 			body: 'Add plants to gardens; add observations; track planting, germination, and harvest dates.',
 			icon: icon('plot'),
-			href: route('gardening.plots.index'),
+			href: route('admin.farm.plots.index'),
 		},
 		{
 			title: 'Projects',
 			body: 'Create lists of plants for specific purposes.',
 			icon: icon('project'),
-			href: route('gardening.projects.index'),
+			href: route('admin.farm.projects.index'),
 		},
 		{
 			title: 'Observations',
 			body: 'View observations from gardens, plants, and plots.',
 			icon: icon('observation'),
-			href: route('gardening.observations.index'),
+			href: route('admin.farm.observations.index'),
 		},
 	]
 </script>

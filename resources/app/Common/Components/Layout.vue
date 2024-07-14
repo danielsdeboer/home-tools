@@ -44,10 +44,10 @@
 	})
 
 	const items = [
-		{ title: 'Home', icon: mdiHome, href: '/home' },
-		{ title: 'Gardening', icon: mdiSprout, href: '/gardening' },
-		{ title: 'Shopping', icon: mdiShopping, href: '/shopping' },
-		{ title: 'Bookmarks', icon: mdiBookmarkMultiple, href: '/bookmarks' },
+		{ title: 'Home', icon: mdiHome, href: '/admin' },
+		{ title: 'Gardening', icon: mdiSprout, href: '/admin/gardening' },
+		{ title: 'Shopping', icon: mdiShopping, href: '/admin/shopping' },
+		{ title: 'Bookmarks', icon: mdiBookmarkMultiple, href: '/admin/bookmarks' },
 	]
 
 	const drawer = ref(false)
