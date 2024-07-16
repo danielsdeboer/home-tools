@@ -1,25 +1,32 @@
 import { sentryVitePlugin } from '@sentry/vite-plugin'
-import { defineConfig } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import laravel from 'laravel-vite-plugin'
 import vue from '@vitejs/plugin-vue'
 import vuetify from 'vite-plugin-vuetify'
 
-export default defineConfig({
-	plugins: [
-		laravel({
-			input: ['resources/app/main.ts'],
-			refresh: true,
-		}),
-		vue(),
-		vuetify(),
-		sentryVitePlugin({
-			org: 'de-boer-tool',
-			project: 'dsd-js',
-			telemetry: false,
-		}),
-	],
+export default defineConfig(({ mode }) => {
+	const env = loadEnv(mode, process.cwd())
 
-	build: {
-		sourcemap: true,
-	},
+	console.log(env)
+
+	return {
+		plugins: [
+			laravel({
+				input: ['resources/app/main.ts'],
+				refresh: true,
+			}),
+			vue(),
+			vuetify(),
+			sentryVitePlugin({
+				org: env.VITE_SENTRY_ORG,
+				project: env.VITE_SENTRY_PROJECT,
+				authToken: env.VITE_SENTRY_AUTH_TOKEN,
+				telemetry: false,
+			}),
+		],
+
+		build: {
+			sourcemap: true,
+		},
+	}
 })
