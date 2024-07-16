@@ -2,6 +2,7 @@ import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import { ZiggyVue } from 'ziggy-js'
 import './styles.css'
+import { init as initSentry } from '@sentry/vue'
 
 // Vuetify
 import 'vuetify/styles'
@@ -31,10 +32,14 @@ createInertiaApp({
 		return pages[`./${name}.vue`]
 	},
 	setup({ el, App, props, plugin }) {
-		createApp({ render: () => h(App, props) })
-			.use(plugin)
-			.use(vuetify)
-			.use(ZiggyVue)
-			.mount(el)
+		const app = createApp({ render: () => h(App, props) })
+
+		initSentry({
+			app,
+			dsn: import.meta.env.VITE_SENTRY_VUE_DSN,
+			integrations: [],
+		})
+
+		app.use(plugin).use(vuetify).use(ZiggyVue).mount(el)
 	},
 })
