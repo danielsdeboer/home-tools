@@ -56,7 +56,7 @@
 	)
 
 	const createAndAddPlant = (form: InertiaForm) => {
-		form.post(route('gardening.projects.plants.new', props.project), {
+		form.post(route('admin.farm.projects.plants.new', props.project), {
 			onSuccess: () => {
 				isCreatingPlant.value = false
 				form.reset()
@@ -150,7 +150,7 @@
 					hide-default-footer
 				>
 					<template #item.name="{ item }">
-						<Link :href="route('gardening.plants.show', item)">
+						<Link :href="route('admin.farm.plants.show', item)">
 							{{ item.name }}
 						</Link>
 					</template>

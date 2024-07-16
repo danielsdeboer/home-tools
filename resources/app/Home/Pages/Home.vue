@@ -8,7 +8,7 @@
 			title: 'Gardening',
 			body: 'Create and update gardens and their contents.',
 			icon: mdiSprout,
-			href: route('gardening.index'),
+			href: route('admin.farm.index'),
 		},
 		{
 			title: 'Shopping',
@@ -20,7 +20,7 @@
 			title: 'Bookmarks',
 			body: 'Create and update bookmarks.',
 			icon: mdiBookmarkMultiple,
-			href: route('bookmarks.index'),
+			href: route('admin.bookmarks.index'),
 		},
 	]
 </script>

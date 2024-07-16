@@ -22,7 +22,7 @@
 	})
 
 	const store = (form: InertiaForm) => {
-		form.post(route('gardening.plots.store'))
+		form.post(route('admin.farm.plots.store'))
 	}
 </script>
 

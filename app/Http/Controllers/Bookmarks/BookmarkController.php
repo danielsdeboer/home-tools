@@ -30,7 +30,7 @@ class BookmarkController
 	public function __construct()
 	{
 		$this->breadcrumbs = new BreadcrumbsPacket(
-			new CrumbPacket('Bookmarks', route('bookmarks.index')),
+			new CrumbPacket('Bookmarks', route('admin.bookmarks.index')),
 		);
 
 		$this->htmlTitle = new HtmlTitlePacket('Bookmarks');
@@ -42,7 +42,7 @@ class BookmarkController
 	{
 		return Inertia::render('Bookmarks/Pages/BookmarkIndex', [
 			'page' => new PagePacket(
-				createRoute: route('bookmarks.create'),
+				createRoute: route('admin.bookmarks.create'),
 				breadcrumbs: $this->breadcrumbs,
 				header: new HeaderPacket('Bookmarks', $this->icon),
 				htmlTitle: $this->htmlTitle,
@@ -91,7 +91,7 @@ class BookmarkController
 	{
 		$bookmark = Bookmark::create($this->getValidated($request));
 
-		return redirect()->route('bookmarks.index', $bookmark);
+		return redirect()->route('admin.bookmarks.index', $bookmark);
 	}
 
 	public function update(
@@ -100,7 +100,7 @@ class BookmarkController
 	): RedirectResponse {
 		$bookmark->update($this->getValidated($request, $bookmark));
 
-		return redirect()->route('bookmarks.index', $bookmark);
+		return redirect()->route('admin.bookmarks.index', $bookmark);
 	}
 
 	protected function getValidated(

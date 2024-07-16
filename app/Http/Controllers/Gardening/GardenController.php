@@ -28,8 +28,8 @@ class GardenController
 	public function __construct()
 	{
 		$this->breadcrumbs = new BreadcrumbsPacket(
-			new CrumbPacket('Gardening', route('gardening.index')),
-			new CrumbPacket('Gardens', route('gardening.gardens.index')),
+			new CrumbPacket('Gardening', route('admin.farm.index')),
+			new CrumbPacket('Gardens', route('admin.farm.gardens.index')),
 		);
 
 		$this->htmlTitle = new HtmlTitlePacket('Gardening', 'Gardens');
@@ -39,7 +39,7 @@ class GardenController
 	{
 		return Inertia::render('Gardening/Pages/Gardens/GardensIndex', [
 			'page' => new PagePacket(
-				createRoute: route('gardening.gardens.create'),
+				createRoute: route('admin.farm.gardens.create'),
 				breadcrumbs: $this->breadcrumbs,
 				header: new HeaderPacket('Gardens', ResourceIcon::Garden),
 				htmlTitle: $this->htmlTitle,
@@ -55,7 +55,7 @@ class GardenController
 	{
 		return Inertia::render('Gardening/Pages/Gardens/GardensShow', [
 			'page' => new PagePacket(
-				editRoute: route('gardening.gardens.edit', $garden),
+				editRoute: route('admin.farm.gardens.edit', $garden),
 				breadcrumbs: $this->breadcrumbs->push(
 					new CrumbPacket($garden->name, '', disabled: true),
 				),
@@ -113,7 +113,7 @@ class GardenController
 
 		$garden = Garden::create($validated);
 
-		return redirect()->route('gardening.gardens.show', $garden);
+		return redirect()->route('admin.farm.gardens.show', $garden);
 	}
 
 	public function update(Request $request, Garden $garden): RedirectResponse
@@ -126,6 +126,6 @@ class GardenController
 
 		$garden->update($validated);
 
-		return redirect()->route('gardening.gardens.show', $garden);
+		return redirect()->route('admin.farm.gardens.show', $garden);
 	}
 }

@@ -30,7 +30,7 @@ class AuthController
 		if (Auth::attempt($credentials, remember: true)) {
 			$request->session()->regenerate();
 
-			return redirect()->route('home.index');
+			return redirect()->route('admin.index');
 		}
 
 		return back()

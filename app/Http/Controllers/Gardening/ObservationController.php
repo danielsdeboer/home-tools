@@ -22,10 +22,10 @@ class ObservationController
 	public function __construct()
 	{
 		$this->breadcrumbs = new BreadcrumbsPacket(
-			new CrumbPacket('Gardening', route('gardening.index')),
+			new CrumbPacket('Gardening', route('admin.farm.index')),
 			new CrumbPacket(
 				'Observations',
-				route('gardening.observations.index'),
+				route('admin.farm.observations.index'),
 			),
 		);
 

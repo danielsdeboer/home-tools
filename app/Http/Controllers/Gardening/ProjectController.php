@@ -33,8 +33,8 @@ class ProjectController
 	public function __construct()
 	{
 		$this->breadcrumbs = new BreadcrumbsPacket(
-			new CrumbPacket('Gardening', route('gardening.index')),
-			new CrumbPacket('Projects', route('gardening.projects.index')),
+			new CrumbPacket('Gardening', route('admin.farm.index')),
+			new CrumbPacket('Projects', route('admin.farm.projects.index')),
 		);
 
 		$this->htmlTitle = new HtmlTitlePacket('Gardening', 'Projects');
@@ -57,7 +57,7 @@ class ProjectController
 
 		return Inertia::render('Gardening/Pages/Projects/ProjectsIndex', [
 			'page' => new PagePacket(
-				createRoute: route('gardening.projects.create'),
+				createRoute: route('admin.farm.projects.create'),
 				breadcrumbs: $this->breadcrumbs,
 				header: new HeaderPacket('Projects', ResourceIcon::Project),
 				htmlTitle: $this->htmlTitle,
@@ -76,7 +76,7 @@ class ProjectController
 	{
 		return Inertia::render('Gardening/Pages/Projects/ProjectsShow', [
 			'page' => new PagePacket(
-				editRoute: route('gardening.projects.edit', $project),
+				editRoute: route('admin.farm.projects.edit', $project),
 				breadcrumbs: $this->breadcrumbs->pushDisabled($project->name),
 				header: new HeaderPacket($project->name, ResourceIcon::Project),
 				htmlTitle: $this->htmlTitle->push($project->name),
@@ -142,7 +142,7 @@ class ProjectController
 
 		$project = Project::create($validated);
 
-		return redirect()->route('gardening.projects.show', $project);
+		return redirect()->route('admin.farm.projects.show', $project);
 	}
 
 	public function update(Request $request, Project $project): RedirectResponse
@@ -154,6 +154,6 @@ class ProjectController
 
 		$project->update($validated);
 
-		return redirect()->route('gardening.projects.show', $project);
+		return redirect()->route('admin.farm.projects.show', $project);
 	}
 }

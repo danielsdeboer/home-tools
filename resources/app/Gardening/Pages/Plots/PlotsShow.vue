@@ -51,7 +51,7 @@
 	const isEditingObservationUuid = ref(null)
 
 	const storeObservation = (form: InertiaForm) => {
-		form.post(route('gardening.plots.observations.store', props.plot), {
+		form.post(route('admin.farm.plots.observations.store', props.plot), {
 			onSuccess: () => {
 				isCreatingObservation.value = false
 			},
@@ -60,7 +60,7 @@
 
 	const updateObservation = (form: InertiaForm, plot: Plot) => {
 		form.patch(
-			route('gardening.plants.observations.update', {
+			route('admin.farm.plants.observations.update', {
 				plot: props.plot,
 				observation,
 			}),
@@ -79,7 +79,7 @@
 	const plantFormIsValid = ref(false)
 
 	const addPlant = () => {
-		plantForm.post(route('gardening.plots.plants.store', props.plot), {
+		plantForm.post(route('admin.farm.plots.plants.store', props.plot), {
 			onSuccess: () => {
 				isAddingPlant.value = false
 			},
@@ -111,7 +111,7 @@
 							<div><strong>Garden Name:</strong></div>
 							<div>
 								<Link
-									:href="route('gardening.gardens.show', plot.garden)"
+									:href="route('admin.farm.gardens.show', plot.garden)"
 									v-text="plot.garden.name"
 								/>
 							</div>
@@ -226,7 +226,7 @@
 					hide-default-footer
 				>
 					<template #item.name="{ item }">
-						<Link :href="route('gardening.plants.show', item)">
+						<Link :href="route('admin.farm.plants.show', item)">
 							{{ item.name }}
 						</Link>
 					</template>

@@ -65,7 +65,7 @@
 	const projectTableHeaders = [{ title: 'Project Name', key: 'name' }]
 
 	const storeObservation = (form: InertiaForm) => {
-		form.post(route('gardening.plants.observations.store', props.plant), {
+		form.post(route('admin.farm.plants.observations.store', props.plant), {
 			onSuccess: () => {
 				isCreatingObservation.value = false
 			},
@@ -74,7 +74,7 @@
 
 	const updateObservation = (form: InertiaForm, observation: Observation) => {
 		form.patch(
-			route('gardening.plants.observations.update', {
+			route('admin.farm.plants.observations.update', {
 				plant: props.plant.uuid,
 				observation: observation.uuid,
 			}),
@@ -87,7 +87,7 @@
 	}
 
 	const storeLink = (form: InertiaForm) => {
-		form.post(route('gardening.plants.links.store', props.plant), {
+		form.post(route('admin.farm.plants.links.store', props.plant), {
 			onSuccess: () => {
 				isCreatingLink.value = false
 			},
@@ -99,7 +99,7 @@
 	const isCreatingPhoto = ref(false)
 
 	const storePhoto = (form: InertiaForm) => {
-		form.post(route('gardening.plants.photos.store', props.plant), {
+		form.post(route('admin.farm.plants.photos.store', props.plant), {
 			onSuccess: () => {
 				isCreatingPhoto.value = false
 			},
@@ -249,7 +249,7 @@
 					hide-default-footer
 				>
 					<template #item.name="{ item }">
-						<Link :href="route('gardening.plots.show', item)">
+						<Link :href="route('admin.farm.plots.show', item)">
 							{{ item.name }}
 						</Link>
 					</template>
@@ -271,7 +271,7 @@
 					hide-default-footer
 				>
 					<template #item.name="{ item }">
-						<Link :href="route('gardening.projects.show', item)">
+						<Link :href="route('admin.farm.projects.show', item)">
 							{{ item.name }}
 						</Link>
 					</template>
