@@ -11,7 +11,6 @@ class GardenPlotController
 	public function store(Request $request, Garden $garden): RedirectResponse
 	{
 		$validated = $request->validate([
-			'plant_uuid' => ['required', 'exists:plants,uuid'],
 			'name' => ['required', 'string'],
 			'description' => ['present', 'nullable', 'string'],
 			'planted_at' => ['required', 'date'],
