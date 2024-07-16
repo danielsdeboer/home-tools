@@ -5,9 +5,7 @@ import vue from '@vitejs/plugin-vue'
 import vuetify from 'vite-plugin-vuetify'
 
 export default defineConfig(({ mode }) => {
-	const env = loadEnv(mode, process.cwd())
-
-	console.log(env)
+	const env = loadEnv(mode, process.cwd(), '')
 
 	return {
 		plugins: [
@@ -18,9 +16,9 @@ export default defineConfig(({ mode }) => {
 			vue(),
 			vuetify(),
 			sentryVitePlugin({
-				org: env.VITE_SENTRY_ORG,
-				project: env.VITE_SENTRY_PROJECT,
-				authToken: env.VITE_SENTRY_AUTH_TOKEN,
+				org: env.SENTRY_ORG,
+				project: env.SENTRY_PROJECT,
+				authToken: env.SENTRY_AUTH_TOKEN,
 				telemetry: false,
 			}),
 		],
