@@ -33,9 +33,6 @@ createInertiaApp({
 	},
 	setup({ el, App, props, plugin }) {
 		const app = createApp({ render: () => h(App, props) })
-			.use(plugin)
-			.use(vuetify)
-			.use(ZiggyVue)
 
 		initSentry({
 			app,
@@ -43,8 +40,6 @@ createInertiaApp({
 			integrations: [],
 		})
 
-		app.mount(el)
+		app.use(plugin).use(vuetify).use(ZiggyVue).mount(el)
 	},
 })
-
-myUndefinedFunction()
