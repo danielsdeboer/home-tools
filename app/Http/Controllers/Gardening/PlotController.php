@@ -22,6 +22,8 @@ use App\Models\Plant;
 use App\Models\Plot;
 use App\Models\Scopes\Gardening\Plots\PlotSearchScope;
 use App\Models\Scopes\WhenScope;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -54,6 +56,7 @@ class PlotController
 			->scope($searchScope)
 			->with('garden')
 			->withCount(['observations', 'plants'])
+			->orderBy('name')
 			->paginate(perPage: 24);
 
 		return Inertia::render('Gardening/Pages/Plots/PlotsIndex', [
@@ -79,7 +82,7 @@ class PlotController
 	{
 		$plot->load([
 			'garden',
-			'plants',
+			'plants' => fn (BelongsToMany $query) => $query->orderBy('name'),
 			'observations' => fn (MorphMany $query) => $query->orderBy(
 				'observed_at',
 				'desc',

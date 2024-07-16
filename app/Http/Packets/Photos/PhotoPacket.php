@@ -11,6 +11,7 @@ class PhotoPacket extends ModelPacket
 	public function data(): array
 	{
 		return [
+			'uuid' => $this->model->uuid,
 			'src' => $this->model->getUrl(),
 			'thumb' => $this->model->getUrl('thumb'),
 		];

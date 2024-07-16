@@ -15,6 +15,9 @@ use App\Http\Packets\Page\PagePacket;
 use App\Http\Packets\PaginationPacket;
 use App\Models\Garden;
 use App\Models\Plant;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -53,6 +56,14 @@ class GardenController
 
 	public function show(Garden $garden): Response
 	{
+		$garden->load([
+			'plots' => fn (HasMany $relation) => $relation->orderBy('name'),
+			'observations' => fn (MorphMany $relation) => $relation->orderBy(
+				'observed_at',
+				'desc',
+			),
+		]);
+
 		return Inertia::render('Gardening/Pages/Gardens/GardensShow', [
 			'page' => new PagePacket(
 				editRoute: route('admin.farm.gardens.edit', $garden),

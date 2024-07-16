@@ -16,10 +16,10 @@
 	import { mdiImage, mdiLink } from '@mdi/js/commonjs/mdi'
 	import LinksForm from '../../../Common/Components/Links/LinksForm.vue'
 	import WhitespaceText from '../../../Common/Components/Form/Content/WhitespaceText.vue'
-	import PhotosForm from '../../Forms/PhotosForm.vue'
 	import { Photos } from '../../Types/Photo'
 	import { Project } from '../../Types/Projects'
 	import { resolveIcon } from '../../../Common/Icons/moduleIcons'
+	import PhotoSection from '../../../Common/Components/Sections/PhotoSection.vue'
 
 	const props = defineProps({
 		plant: {
@@ -95,8 +95,6 @@
 	}
 
 	// Photos //
-
-	const isCreatingPhoto = ref(false)
 
 	const storePhoto = (form: InertiaForm) => {
 		form.post(route('admin.farm.plants.photos.store', props.plant), {
@@ -202,40 +200,6 @@
 
 			<Section>
 				<SectionHeader
-					:icon="mdiImage"
-					text="Photos"
-					:has-create="true"
-					:is-creating="isCreatingPhoto"
-					@toggle-create="isCreatingPhoto = !isCreatingPhoto"
-				/>
-
-				<PhotosForm
-					v-if="isCreatingPhoto"
-					:errors="errors"
-					:persist="storePhoto"
-					class="mt-4"
-					@cancel="isCreatingPhoto = false"
-				/>
-
-				<div class="photo-thumbnail-grid mt-4">
-					<v-img
-						v-for="photo in plant.photos"
-						:key="photo.uuid"
-						:src="photo.thumb || photo.src"
-						aspect-ratio="1"
-					/>
-				</div>
-
-				<v-empty-state
-					v-if="!isCreatingPhoto && !plant.photos?.length"
-					:icon="mdiImage"
-					title="No Photos Yet"
-					size="40px"
-				/>
-			</Section>
-
-			<Section>
-				<SectionHeader
 					:icon="mdiSelectMarker"
 					:has-create="false"
 					text="Plots containing this plant"
@@ -255,6 +219,8 @@
 					</template>
 				</v-data-table>
 			</Section>
+
+			<PhotoSection :persist="storePhoto" :photos="plant.photos" :errors />
 
 			<Section>
 				<SectionHeader
