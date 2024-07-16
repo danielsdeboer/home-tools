@@ -15,12 +15,12 @@ export default defineConfig(({ mode }) => {
 			}),
 			vue(),
 			vuetify(),
-			sentryVitePlugin({
-				org: env.SENTRY_ORG,
-				project: env.SENTRY_PROJECT,
-				authToken: env.SENTRY_AUTH_TOKEN,
-				telemetry: false,
-			}),
+			// sentryVitePlugin({
+			// 	org: env.SENTRY_ORG,
+			// 	project: env.SENTRY_PROJECT,
+			// 	authToken: env.SENTRY_AUTH_TOKEN,
+			// 	telemetry: false,
+			// }),
 		],
 
 		build: {
