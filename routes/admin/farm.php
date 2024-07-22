@@ -13,6 +13,7 @@ use App\Http\Controllers\Gardening\PlotObservationController;
 use App\Http\Controllers\Gardening\PlotPlantController;
 use App\Http\Controllers\Gardening\ProjectController;
 use App\Http\Controllers\Gardening\ProjectPlantController;
+use App\Http\Controllers\Gardening\SettingController;
 use App\Http\Controllers\GardeningController;
 
 Route::prefix('farm')->name('farm.')->group(function () {
@@ -67,4 +68,8 @@ Route::prefix('farm')->name('farm.')->group(function () {
 
 	Route::get('observations', [ObservationController::class, 'index'])
 		->name('observations.index');
+
+	// Settings //
+	Route::resource('settings', SettingController::class)
+		->only(['index', 'update', 'edit']);
 })->scopeBindings();

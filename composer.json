@@ -17,6 +17,7 @@
 		"laravel/tinker": "^2.8",
 		"sentry/sentry-laravel": "^4.7",
 		"spatie/laravel-medialibrary": "^10.15",
+		"spatie/laravel-settings": "^3.3",
 		"tightenco/ziggy": "^2.2"
 	},
 	"require-dev": {
@@ -33,6 +34,7 @@
 	"autoload": {
 		"psr-4": {
 			"App\\": "app/",
+			"Admin\\": "Admin/",
 			"Database\\Factories\\": "database/factories/",
 			"Database\\Seeders\\": "database/seeders/"
 		}
