@@ -70,6 +70,13 @@ Route::prefix('farm')->name('farm.')->group(function () {
 		->name('observations.index');
 
 	// Settings //
-	Route::resource('settings', SettingController::class)
-		->only(['index', 'update', 'edit']);
+
+	Route::get('settings', [SettingController::class, 'index'])
+		->name('settings.index');
+
+	Route::get('settings/edit', [SettingController::class, 'edit'])
+		->name('settings.edit');
+
+	Route::patch('settings', [SettingController::class, 'update'])
+		->name('settings.update');
 })->scopeBindings();

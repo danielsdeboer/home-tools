@@ -9,6 +9,9 @@ use App\Http\Packets\Page\CrumbPacket;
 use App\Http\Packets\Page\HeaderPacket;
 use App\Http\Packets\Page\HtmlTitlePacket;
 use App\Http\Packets\Page\PagePacket;
+use Carbon\CarbonImmutable;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -42,89 +45,39 @@ class SettingController
 		]);
 	}
 
-	// public function show(Garden $garden): Response
-	// {
-	// 	$garden->load([
-	// 		'plots' => fn (HasMany $relation) => $relation->orderBy('name'),
-	// 		'observations' => fn (MorphMany $relation) => $relation->orderBy(
-	// 			'observed_at',
-	// 			'desc',
-	// 		),
-	// 	]);
-	//
-	// 	return Inertia::render('Gardening/Pages/Gardens/GardensShow', [
-	// 		'page' => new PagePacket(
-	// 			editRoute: route('admin.farm.gardens.edit', $garden),
-	// 			breadcrumbs: $this->breadcrumbs->push(
-	// 				new CrumbPacket($garden->name, '', disabled: true),
-	// 			),
-	// 			header: new HeaderPacket($garden->name, ResourceIcon::Garden),
-	// 			htmlTitle: $this->htmlTitle->push($garden->name),
-	// 		),
-	// 		'garden' => new GardensShowPacket($garden),
-	// 		'plants' => new CollectionPacket(
-	// 			Plant::orderBy('name')->get(),
-	// 			GardenPlantPacket::class,
-	// 		),
-	// 	]);
-	// }
-	//
-	// public function create(): Response
-	// {
-	// 	return Inertia::render('Gardening/Pages/Gardens/GardensCreate', [
-	// 		'page' => new PagePacket(
-	// 			breadcrumbs: $this->breadcrumbs->pushDisabled('Create'),
-	// 			header: new HeaderPacket(
-	// 				'Create a new garden',
-	// 				ResourceIcon::Garden,
-	// 			),
-	// 			htmlTitle: $this->htmlTitle->push('Create a new garden'),
-	// 		),
-	// 	]);
-	// }
-	//
-	// public function edit(Garden $garden): Response
-	// {
-	// 	return Inertia::render('Gardening/Pages/Gardens/GardensEdit', [
-	// 		'garden' => new GardensShowPacket($garden),
-	// 		'page' => new PagePacket(
-	// 			breadcrumbs: $this->breadcrumbs->pushDisabled(
-	// 				sprintf('Edit: %s', $garden->name),
-	// 			),
-	// 			header: new HeaderPacket(
-	// 				sprintf('Edit Garden - %s', $garden->name),
-	// 				ResourceIcon::Garden,
-	// 			),
-	// 			htmlTitle: $this->htmlTitle->push(
-	// 				sprintf('Edit garden - %s', $garden->name),
-	// 			),
-	// 		),
-	// 	]);
-	// }
-	//
-	// public function store(Request $request): RedirectResponse
-	// {
-	// 	$validated = $request->validate([
-	// 		'name' => ['required', 'string'],
-	// 		'location' => ['required', 'string'],
-	// 		'description' => ['present', 'nullable', 'string'],
-	// 	]);
-	//
-	// 	$garden = Garden::create($validated);
-	//
-	// 	return redirect()->route('admin.farm.gardens.show', $garden);
-	// }
-	//
-	// public function update(Request $request, Garden $garden): RedirectResponse
-	// {
-	// 	$validated = $request->validate([
-	// 		'name' => ['required', 'string'],
-	// 		'location' => ['required', 'string'],
-	// 		'description' => ['present', 'nullable', 'string'],
-	// 	]);
-	//
-	// 	$garden->update($validated);
-	//
-	// 	return redirect()->route('admin.farm.gardens.show', $garden);
-	// }
+	public function edit(FrostDateSettings $settings): Response
+	{
+		return Inertia::render('Gardening/Pages/Settings/SettingEdit', [
+			'page' => new PagePacket(
+				breadcrumbs: $this->breadcrumbs->pushDisabled(
+					'Edit Settings',
+				),
+				header: new HeaderPacket(
+					'Edit Settings',
+					ResourceIcon::Setting,
+				),
+				htmlTitle: $this->htmlTitle->push('Edit Settings'),
+			),
+			'settings' => [
+				'spring' => $settings->spring,
+				'autumn' => $settings->autumn,
+			],
+		]);
+	}
+
+	public function update(
+		Request $request,
+		FrostDateSettings $settings,
+	): RedirectResponse {
+		$validated = $request->validate([
+			'spring' => ['required', 'string', 'date'],
+			'autumn' => ['required', 'string', 'date'],
+		]);
+
+		$settings->spring = CarbonImmutable::parse($validated['spring']);
+		$settings->autumn = CarbonImmutable::parse($validated['autumn']);
+		$settings->save();
+
+		return redirect()->route('admin.farm.settings.index');
+	}
 }

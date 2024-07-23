@@ -4,6 +4,8 @@
 	import { Page } from '../../../Common/Types/Page'
 	import { GardeningSettingsTable } from '../../Types/Settings'
 	import { useDate } from 'vuetify'
+	import { mdiPencil } from '@mdi/js'
+	import { Link } from '@inertiajs/vue3'
 
 	const date = useDate()
 
@@ -30,6 +32,12 @@
 
 <template>
 	<Layout :page="page">
+		<template #header-actions>
+			<Link :href="route('admin.farm.settings.edit')">
+				<v-btn :icon="mdiPencil" size="small" />
+			</Link>
+		</template>
+
 		<v-data-table
 			hide-default-footer
 			:headers="headers"
