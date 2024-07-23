@@ -15,6 +15,10 @@ export default defineConfig(({ mode }) => {
 			}),
 			vue(),
 			vuetify(),
+			// This is commented out for the moment. Something about the way it works
+			// with Vite's sourcemaps is causing an out-of-memory error. Since we're
+			// not super-reliant on sourcemaps in production, we can reenable this
+			// later once the issue is resolved.
 			// sentryVitePlugin({
 			// 	org: env.SENTRY_ORG,
 			// 	project: env.SENTRY_PROJECT,

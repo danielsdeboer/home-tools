@@ -1,5 +1,6 @@
 import {
 	mdiBinoculars,
+	mdiCog,
 	mdiGridLarge,
 	mdiSelectMarker,
 	mdiSprout,
@@ -13,6 +14,7 @@ export const moduleIcons = {
 		plot: mdiSelectMarker,
 		observation: mdiBinoculars,
 		project: mdiNotebook,
+		setting: mdiCog,
 	},
 	shopping: {
 		items: mdiCube,

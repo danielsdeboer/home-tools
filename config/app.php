@@ -185,4 +185,10 @@ return [
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
 
+	// Non-Framework Config //
+
+	'frost_dates' => [
+		'spring' => env('SPRING_FROST_DATE'),
+		'autumn' => env('AUTUMN_FROST_DATE')
+	],
 ];
